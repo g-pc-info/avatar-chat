@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Avatar Chat</title>
+<style>
+:root{--bg:#f4f6f8;--panel:#fff;--text:#1d2733;--sub:#6b7785;--line:#dde3ea;--accent:#2a9d8f;--me:#dff3ef;--bot:#eef1f5;--err:#c0392b}
+@media(prefers-color-scheme:dark){:root{--bg:#14181d;--panel:#1c2228;--text:#e6ebf0;--sub:#8b97a4;--line:#2b343d;--accent:#3dbdac;--me:#1f4640;--bot:#262e36;--err:#ff7a6b}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{background:var(--bg);color:var(--text);font:15px/1.6 "Segoe UI","Yu Gothic UI","Meiryo",sans-serif}
+button,input,textarea,select{font:inherit;color:inherit}
+button{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button.danger{color:var(--err)}
+input,textarea,select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 10px;width:100%}
+.app{display:grid;grid-template-columns:200px minmax(0,1fr) 270px;grid-template-rows:minmax(0,1fr);height:100vh;height:100dvh;overflow:hidden}
+aside{background:var(--panel);border-right:1px solid var(--line);padding:12px;overflow:auto;display:flex;flex-direction:column;gap:8px}
+aside.mem{border-right:0;border-left:1px solid var(--line)}
+h1{font-size:16px;margin:0 0 4px}
+h2{font-size:14px;margin:0;color:var(--sub)}
+.char{display:flex;align-items:center;gap:8px;text-align:left;width:100%}
+.char img{width:34px;height:34px;object-fit:contain;border-radius:8px;background:var(--bg)}
+.char.on{border-color:var(--accent);background:var(--me)}
+.main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.stage{flex:none;display:flex;align-items:center;gap:16px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--panel)}
+#avatarWrap{flex:none;max-width:50%;transform-origin:50% 100%;animation:idle 4.2s ease-in-out infinite;will-change:transform}
+#avatar{display:block;height:min(34vh,300px);max-width:100%;object-fit:contain;transform-origin:50% 100%}
+#avatar.pop{animation:pop .35s ease}
+@keyframes pop{0%{transform:scale(.95)}55%{transform:scale(1.04)}100%{transform:scale(1)}}
+/* ---- アイドルモーション(感情ごと) 足元を支点に動かす ---- */
+@keyframes idle{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-3px) scale(.988,1.02)}}
+@keyframes bounce{0%,100%{transform:translateY(0) scale(1.04,.94)}45%{transform:translateY(-16px) scale(.97,1.05)}70%{transform:translateY(0) scale(1.03,.96)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px) rotate(-.6deg)}75%{transform:translateX(3px) rotate(.6deg)}}
+@keyframes droop{0%,100%{transform:translateY(2px) scale(1.01,.98)}50%{transform:translateY(5px) scale(1.02,.96)}}
+@keyframes wiggle{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes tilt{0%,100%{transform:rotate(-5deg) translateY(0)}50%{transform:rotate(-2deg) translateY(-3px)}}
+@keyframes doze{0%,100%{transform:rotate(1deg) scale(1.01,.99)}50%{transform:rotate(3.5deg) translateY(4px) scale(.99,1.03)}}
+@keyframes jitter{0%,100%{transform:translate(0,0)}25%{transform:translate(1px,-2px)}50%{transform:translate(-1px,0)}75%{transform:translate(1px,1px)}}
+#avatarWrap[data-emo=happy]{animation:bounce .9s ease-in-out infinite}
+#avatarWrap[data-emo=angry]{animation:shake .14s linear infinite}
+#avatarWrap[data-emo=sad]{animation:droop 6s ease-in-out infinite}
+#avatarWrap[data-emo=embarrassed]{animation:wiggle 1.5s ease-in-out infinite}
+#avatarWrap[data-emo=thinking]{animation:tilt 4.5s ease-in-out infinite}
+#avatarWrap[data-emo=sleepy]{animation:doze 7s ease-in-out infinite}
+#avatarWrap[data-emo=surprised]{animation:jitter .25s linear infinite}
+/* ---- soft: 人間型向け。つぶれ・伸びなし(上下と小さな傾きだけ) ---- */
+@keyframes s-idle{0%,100%{transform:translateY(0) rotate(-.3deg) scale(1)}50%{transform:translateY(-4px) rotate(.3deg) scale(1.01)}}
+@keyframes s-bounce{0%,100%{transform:translateY(0)}45%{transform:translateY(-8px)}70%{transform:translateY(0)}}
+@keyframes s-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}
+@keyframes s-droop{0%,100%{transform:translateY(1px)}50%{transform:translateY(4px)}}
+@keyframes s-wiggle{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
+@keyframes s-tilt{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(-1deg) translateY(-2px)}}
+@keyframes s-doze{0%,100%{transform:rotate(.5deg)}50%{transform:rotate(2deg) translateY(3px)}}
+@keyframes s-jitter{0%,100%{transform:translate(0,0)}25%{transform:translate(1px,-1px)}50%{transform:translate(-1px,0)}75%{transform:translate(1px,1px)}}
+#avatarWrap[data-style=soft]{animation:s-idle 4.2s ease-in-out infinite}
+#avatarWrap[data-style=soft][data-emo=happy]{animation:s-bounce 1.2s ease-in-out infinite}
+#avatarWrap[data-style=soft][data-emo=angry]{animation:s-shake .16s linear infinite}
+#avatarWrap[data-style=soft][data-emo=sad]{animation:s-droop 6s ease-in-out infinite}
+#avatarWrap[data-style=soft][data-emo=embarrassed]{animation:s-wiggle 1.8s ease-in-out infinite}
+#avatarWrap[data-style=soft][data-emo=thinking]{animation:s-tilt 4.5s ease-in-out infinite}
+#avatarWrap[data-style=soft][data-emo=sleepy]{animation:s-doze 7s ease-in-out infinite}
+#avatarWrap[data-style=soft][data-emo=surprised]{animation:s-jitter .25s linear infinite}
+body[data-motion=off] #avatarWrap,body[data-motion=off] #avatarWrap[data-emo],body[data-motion=off] #avatarWrap[data-style]{animation:none!important}
+.stage .info{display:flex;flex-direction:column;gap:6px;min-width:0}
+.stage .name{font-size:18px;font-weight:600}
+.stage .emo{color:var(--sub);font-size:13px}
+#log{flex:1;min-height:0;overflow-y:scroll;scrollbar-color:var(--sub) transparent;padding:16px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:78%;padding:8px 12px;border-radius:12px;white-space:pre-wrap;word-break:break-word}
+.msg.me{align-self:flex-end;background:var(--me)}
+.msg.bot{align-self:flex-start;background:var(--bot)}
+.msg.err{color:var(--err)}
+.msg.pending{color:var(--sub)}
+.recall{align-self:flex-start;color:var(--sub);font-size:12px;max-width:78%;margin-top:-6px}
+.recall a{color:var(--accent)}
+form.input{flex:none;display:flex;gap:8px;padding:10px 16px;border-top:1px solid var(--line);background:var(--panel)}
+form.input textarea{resize:none;height:56px}
+.memitem{border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:13px;position:relative}
+.memitem .bar{height:4px;background:var(--line);border-radius:2px;margin-top:4px}
+.memitem .bar i{display:block;height:100%;background:var(--accent);border-radius:2px}
+.memitem .meta{color:var(--sub);font-size:11px}
+.memitem .x{position:absolute;right:4px;top:2px;z-index:1;border:0;background:none;color:var(--sub);padding:0 6px;font-size:16px;line-height:1.4}
+.memitem .x:hover{color:var(--err)}
+.memitem .t{padding-right:24px}
+dialog{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:12px;width:min(560px,94vw);padding:16px}
+dialog::backdrop{background:#0006}
+dialog label{display:block;margin:8px 0 2px;font-size:13px;color:var(--sub)}
+dialog .row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.emorow{display:grid;grid-template-columns:96px 1fr;gap:8px;align-items:center;margin:4px 0}
+.emorow span{font-size:13px}
+.note{font-size:12px;color:var(--sub)}
+.combo{position:relative;flex:1;min-width:0}
+.menu{position:absolute;left:0;right:0;top:calc(100% + 2px);z-index:20;max-height:220px;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 18px #0003}
+.menu[hidden]{display:none}
+.menu div{padding:5px 10px;cursor:pointer;font-size:14px;word-break:break-all}
+.menu div:hover,.menu div.act{background:var(--me)}
+.menu div.cur{font-weight:600;color:var(--accent)}
+button.two{white-space:pre-line;line-height:1.25;padding:4px 10px;flex:none}
+.spin{flex:none;width:20px;height:20px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+.spin[hidden]{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:900px){.app{grid-template-columns:1fr}aside{display:none}.stage{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <h1>Avatar Chat</h1>
+    <div id="charList" style="display:flex;flex-direction:column;gap:6px"></div>
+    <button id="btnAdd" data-i18n="add_char"></button>
+    <div style="flex:1"></div>
+    <select id="uiLang" title="Language" aria-label="Language">
+      <option value="ja">日本語</option>
+      <option value="en">English</option>
+      <option value="zh">简体中文</option>
+      <option value="es">Español</option>
+      <option value="pt">Português</option>
+    </select>
+    <button id="btnSettings" data-i18n="settings"></button>
+  </aside>
+
+  <section class="main">
+    <div class="stage">
+      <div id="avatarWrap"><img id="avatar" alt=""></div>
+      <div class="info">
+        <div class="name" id="charName"></div>
+        <div class="emo" id="emoLabel"></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button id="btnClear" data-i18n="clear_chat"></button>
+          <button id="btnDelChar" class="danger" data-i18n="delete_char" hidden></button>
+        </div>
+      </div>
+    </div>
+    <div id="log"></div>
+    <form class="input" id="form">
+      <textarea id="text" data-i18n-ph="input_ph"></textarea>
+      <span id="webWrap" style="display:flex">
+      <select id="webMode" style="width:auto">
+        <option value="auto" data-i18n="web_auto"></option>
+        <option value="always" data-i18n="web_always"></option>
+        <option value="off"></option>
+      </select>
+      </span>
+      <button class="primary" id="btnSend" data-i18n="send"></button>
+    </form>
+  </section>
+
+  <aside class="mem">
+    <h2 data-i18n="mem_title"></h2>
+    <div class="note" data-i18n="mem_note"></div>
+    <div id="memList" style="display:flex;flex-direction:column;gap:6px"></div>
+  </aside>
+</div>
+
+<dialog id="dlgSettings">
+  <h1 data-i18n="s_title"></h1>
+  <label data-i18n="s_base_url"></label>
+  <input id="s_base_url" placeholder="http://127.0.0.1:8080/v1">
+  <label data-i18n="s_api_key"></label>
+  <input id="s_api_key" type="password" autocomplete="off">
+  <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="s_clear_key" style="width:auto"><span data-i18n="s_clear_key"></span></label>
+  <label data-i18n="s_model"></label>
+  <div style="display:flex;gap:6px;align-items:center"><div class="combo"><input id="s_model" autocomplete="off"><div id="modelMenu" class="menu" hidden></div></div><span id="s_spin" class="spin" hidden data-i18n-title="s_spin"></span><button type="button" id="btnModels" class="two" data-i18n="s_models_btn"></button></div>
+  <label data-i18n="s_user_name"></label>
+  <input id="s_user_name">
+  <label data-i18n="s_brave"></label>
+  <input id="s_brave_api_key" type="password" autocomplete="off">
+  <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="s_clear_brave" style="width:auto"><span data-i18n="s_clear_brave"></span></label>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div><label data-i18n="s_country"></label><input id="s_search_country" maxlength="2"></div>
+    <div><label data-i18n="s_results"></label><input id="s_search_results" type="number" min="1" max="10"></div>
+  </div>
+  <div class="note" data-i18n="s_brave_note"></div>
+  <label data-i18n="s_motion"></label>
+  <select id="s_motion">
+    <option value="on" data-i18n="s_motion_on"></option>
+    <option value="os" data-i18n="s_motion_os"></option>
+    <option value="off" data-i18n="s_motion_off"></option>
+  </select>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div><label data-i18n="s_temp"></label><input id="s_temperature" type="number" step="0.1" min="0" max="2"></div>
+    <div><label data-i18n="s_hist"></label><input id="s_history_turns" type="number" min="1" max="50"></div>
+    <div><label data-i18n="s_every"></label><input id="s_memory_every_turns" type="number" min="1" max="50"></div>
+    <div><label data-i18n="s_base_days"></label><input id="s_memory_base_days" type="number" step="0.5" min="0.5"></div>
+  </div>
+  <div class="note" id="s_msg"></div>
+  <div class="row"><button type="button" id="s_cancel" data-i18n="close"></button><button type="button" class="primary" id="s_save" data-i18n="save"></button></div>
+</dialog>
+
+<dialog id="dlgAdd">
+  <h1 data-i18n="a_title"></h1>
+  <label data-i18n="a_name"></label><input id="a_name">
+  <label data-i18n="a_persona"></label><textarea id="a_persona" rows="4" data-i18n-ph="a_persona_ph"></textarea>
+  <label data-i18n="a_greeting"></label><input id="a_greeting">
+  <label data-i18n="a_style"></label>
+  <select id="a_motion">
+    <option value="squash" data-i18n="a_style_squash"></option>
+    <option value="soft" data-i18n="a_style_soft"></option>
+  </select>
+  <label data-i18n="a_images"></label>
+  <div id="a_imgs"></div>
+  <div class="note" data-i18n="a_images_note"></div>
+  <div class="note" id="a_msg"></div>
+  <div class="row"><button type="button" id="a_cancel" data-i18n="close"></button><button type="button" class="primary" id="a_save" data-i18n="a_add"></button></div>
+</dialog>
+
+<script>
+const $ = s => document.querySelector(s);
+const EMOS = ["neutral", "happy", "sad", "angry", "surprised", "embarrassed", "thinking", "sleepy"];
+let chars = [], cur = null, busy = false, revertTimer = null;
+
+/* ---------- i18n (翻訳は app/i18n.json。足りないキーは日本語で表示) ---------- */
+let I18N = {}, LANG = "ja";
+function t(key, p) {
+  let s = (I18N[LANG] || {})[key];
+  if (s === undefined) s = (I18N.ja || {})[key];
+  if (s === undefined) s = key;
+  return p ? s.replace(/\{(\w+)\}/g, (m, k) => (k in p ? p[k] : m)) : s;
+}
+function applyI18n() {
+  document.documentElement.lang = {zh: "zh-CN", pt: "pt-BR"}[LANG] || LANG;
+  document.querySelectorAll("[data-i18n]").forEach(e => { e.textContent = t(e.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(e => { e.placeholder = t(e.dataset.i18nPh); });
+  document.querySelectorAll("[data-i18n-title]").forEach(e => { e.title = t(e.dataset.i18nTitle); });
+  $("#uiLang").value = LANG;
+  renderEmoRows();
+}
+function detectLang() {
+  const n = (navigator.language || "en").toLowerCase();
+  for (const l of ["ja", "zh", "es", "pt"]) if (n.startsWith(l)) return l;
+  return "en";
+}
+async function initI18n() {
+  I18N = await api("/api/i18n");
+  const c = await api("/api/config");
+  LANG = (c.ui_lang && I18N[c.ui_lang]) ? c.ui_lang : detectLang();
+  if (c.ui_lang !== LANG) await jpost("/api/config", {ui_lang: LANG}).catch(() => {});
+  applyI18n();
+}
+
+async function api(path, opt = {}) {
+  const r = await fetch(path, opt);
+  if (!r.ok) {
+    let m = r.statusText;
+    let code = "";
+    try {
+      const j = await r.json();
+      if (j.detail && typeof j.detail === "object" && j.detail.message) { m = j.detail.message; code = j.detail.code || ""; }
+      else m = typeof j.detail === "string" ? j.detail : JSON.stringify(j.detail);
+    } catch {}
+    const err = new Error(m); err.code = code;
+    throw err;
+  }
+  return r.json();
+}
+const jpost = (p, b) => api(p, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(b)});
+
+/* ---------- characters ---------- */
+async function loadChars(selectId) {
+  chars = await api("/api/characters");
+  const box = $("#charList"); box.innerHTML = "";
+  for (const c of chars) {
+    const b = document.createElement("button");
+    b.className = "char" + (cur && cur.id === c.id ? " on" : "");
+    const im = document.createElement("img"); im.src = c.emotions[c.fallback].url;
+    const sp = document.createElement("span"); sp.textContent = c.name;
+    b.append(im, sp); b.onclick = () => selectChar(c.id); box.append(b);
+  }
+  let want = selectId;
+  if (!want) { try { want = localStorage.getItem("lastChar"); } catch {} }
+  const target = chars.find(c => c.id === want) || chars.find(c => c.id === "builtin_mochi") || chars[0];
+  if (target) { await selectChar(target.id); return; }
+  const i = await api("/api/info").catch(() => null);
+  $("#log").innerHTML = "";
+  addMsg("bot", t("nochar") + (i ? `\n${t("nochar_dir", {dir: i.builtin_dir})}\n${i.builtin_exists ? t("nochar_contents", {items: i.builtin_entries.join(", ") || t("nochar_empty")}) : t("nochar_nofolder")}\n${t("nochar_hint")}` : ""), "err");
+}
+
+async function selectChar(id) {
+  cur = chars.find(c => c.id === id); if (!cur) return;
+  try { localStorage.setItem("lastChar", id); } catch {}
+  for (const e of Object.values(cur.emotions)) { new Image().src = e.url; }
+  document.querySelectorAll(".char").forEach((b, i) => b.classList.toggle("on", chars[i].id === id));
+  $("#charName").textContent = cur.name;
+  $("#btnDelChar").hidden = cur.kind !== "user";
+  setEmotion(cur.fallback, false);
+  const hist = await api("/api/history/" + id);
+  const log = $("#log"); log.innerHTML = "";
+  if (!hist.length && cur.greeting) addMsg("bot", cur.greeting);
+  for (const m of hist) addMsg(m.role === "user" ? "me" : "bot", m.text);
+  loadMem();
+}
+
+function setEmotion(name, animate = true) {
+  if (!cur) return;
+  const e = cur.emotions[name] || cur.emotions[cur.fallback];
+  const img = $("#avatar");
+  img.src = e.url;
+  $("#avatarWrap").dataset.emo = cur.emotions[name] ? name : cur.fallback;
+  $("#avatarWrap").dataset.style = cur.motion || "squash";
+  $("#emoLabel").textContent = cur.emotions[name] ? name : cur.fallback;
+  if (animate) { img.classList.remove("pop"); void img.offsetWidth; img.classList.add("pop"); }
+  clearTimeout(revertTimer);
+  if (name !== cur.fallback) revertTimer = setTimeout(() => setEmotion(cur.fallback, false), 12000);
+}
+
+/* ---------- chat ---------- */
+function addMsg(kind, text, cls = "") {
+  const d = document.createElement("div");
+  d.className = "msg " + kind + (cls ? " " + cls : "");
+  d.textContent = text;
+  $("#log").append(d); $("#log").scrollTop = 1e9;
+  return d;
+}
+
+async function send() {
+  const txt = $("#text").value.trim();
+  if (!txt || busy || !cur) return;
+  busy = true; $("#btnSend").disabled = true; $("#text").value = "";
+  addMsg("me", txt);
+  const web = hasBrave ? $("#webMode").value : "off";
+  const pend = addMsg("bot", web === "off" ? t("pending") : t("pending_web"), "pending");
+  if (cur.emotions.thinking) setEmotion("thinking");
+  try {
+    const r = await jpost("/api/chat", {character_id: cur.id, text: txt, web});
+    pend.className = "msg bot"; pend.textContent = r.text;
+    setEmotion(r.emotion);
+    addWebInfo(r);
+    if (r.recalled && r.recalled.length) {
+      const d = document.createElement("div"); d.className = "recall";
+      d.textContent = t("recalled", {items: r.recalled.join(" / ")});
+      $("#log").append(d);
+    }
+    $("#log").scrollTop = 1e9;
+    loadMem(); setTimeout(loadMem, 8000);
+  } catch (e) {
+    pend.className = "msg bot err"; pend.textContent = t("error", {msg: e.message});
+    setEmotion(cur.fallback, false);
+    if (e.code === "need_model") openSettings();
+  } finally { busy = false; $("#btnSend").disabled = false; $("#text").focus(); }
+}
+
+$("#form").addEventListener("submit", e => { e.preventDefault(); send(); });
+$("#text").addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); }
+});
+
+/* ---------- memory ---------- */
+async function loadMem() {
+  if (!cur) return;
+  const list = await api("/api/memories/" + cur.id).catch(() => []);
+  const box = $("#memList"); box.innerHTML = "";
+  if (!list.length) { box.innerHTML = ""; const n = document.createElement("div"); n.className = "note"; n.textContent = t("mem_empty"); box.append(n); return; }
+  for (const m of list) {
+    const d = document.createElement("div"); d.className = "memitem";
+    const tx = document.createElement("div"); tx.className = "t"; tx.textContent = m.text;
+    const bar = document.createElement("div"); bar.className = "bar";
+    const i = document.createElement("i"); i.style.width = Math.min(100, m.strength * 100) + "%"; bar.append(i);
+    const meta = document.createElement("div"); meta.className = "meta";
+    meta.textContent = t("mem_meta", {imp: m.importance, cnt: m.access_count, pct: Math.round(m.strength * 100)});
+    const x = document.createElement("button"); x.className = "x"; x.textContent = "×"; x.title = t("mem_del");
+    x.onclick = async () => { await api("/api/memories/item/" + m.id, {method: "DELETE"}); loadMem(); };
+    d.append(x, tx, bar, meta); box.append(d);
+  }
+}
+
+$("#btnClear").onclick = async () => {
+  if (!cur || !confirm(t("confirm_clear"))) return;
+  const b = $("#btnClear"); b.disabled = true; b.textContent = t("clearing");
+  try { await api("/api/history/" + cur.id, {method: "DELETE"}); }
+  catch (e) { alert(t("error", {msg: e.message})); }
+  finally { b.disabled = false; b.textContent = t("clear_chat"); }
+  selectChar(cur.id);
+};
+$("#btnDelChar").onclick = async () => {
+  if (!cur || !confirm(t("confirm_delete", {name: cur.name}))) return;
+  await api("/api/characters/" + cur.id, {method: "DELETE"}); cur = null; loadChars();
+};
+
+/* ---------- settings ---------- */
+const SFIELDS = ["base_url","model","user_name","temperature","history_turns","memory_every_turns","memory_base_days","search_country","search_results"];
+async function openSettings() {
+  const c = await api("/api/config");
+  for (const k of SFIELDS) $("#s_" + k).value = c[k];
+  try { $("#s_motion").value = localStorage.getItem("motion") || "on"; } catch { $("#s_motion").value = "on"; }
+  $("#s_api_key").value = ""; $("#s_api_key").placeholder = c.has_api_key ? t("key_set_ph") : "";
+  $("#s_clear_key").checked = false; $("#s_msg").textContent = "";
+  $("#s_clear_brave").checked = false; $("#s_brave_api_key").value = "";
+  $("#s_brave_api_key").placeholder = c.has_brave_key ? t("key_set_ph") : "";
+  $("#dlgSettings").showModal();
+}
+$("#btnSettings").onclick = openSettings;
+$("#s_cancel").onclick = () => $("#dlgSettings").close();
+/* モデル名の候補: 入力欄を選ぶと(値が入っていても)全候補を出し、打ち込むと絞り込む */
+let MODELS = [], menuIdx = -1;
+function openModelMenu(filter) {
+  const menu = $("#modelMenu"), val = $("#s_model").value.trim().toLowerCase();
+  const items = MODELS.filter(m => !filter || !val || m.toLowerCase().includes(val));
+  menu.innerHTML = ""; menuIdx = -1;
+  if (!items.length) { menu.hidden = true; return; }
+  for (const m of items) {
+    const d = document.createElement("div"); d.textContent = m;
+    if (m === $("#s_model").value.trim()) d.className = "cur";
+    d.onmousedown = e => { e.preventDefault(); $("#s_model").value = m; menu.hidden = true; };
+    menu.append(d);
+  }
+  menu.hidden = false;
+  const cur = menu.querySelector(".cur"); if (cur && !filter) cur.scrollIntoView({block: "nearest"});
+}
+const closeModelMenu = () => { $("#modelMenu").hidden = true; };
+$("#s_model").addEventListener("focus", () => openModelMenu(false));
+$("#s_model").addEventListener("click", () => openModelMenu(false));
+$("#s_model").addEventListener("input", () => openModelMenu(true));
+$("#s_model").addEventListener("blur", closeModelMenu);
+document.addEventListener("mousedown", e => { if (!e.target.closest(".combo")) closeModelMenu(); });
+$("#s_model").addEventListener("keydown", e => {
+  const menu = $("#modelMenu"), els = [...menu.children];
+  if (menu.hidden) { if (e.key === "ArrowDown") { openModelMenu(false); e.preventDefault(); } return; }
+  if (e.key === "Escape") { closeModelMenu(); e.preventDefault(); e.stopPropagation(); }
+  else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+    e.preventDefault();
+    menuIdx = (menuIdx + (e.key === "ArrowDown" ? 1 : -1) + els.length) % els.length;
+    els.forEach((d, i) => d.classList.toggle("act", i === menuIdx));
+    els[menuIdx].scrollIntoView({block: "nearest"});
+  } else if (e.key === "Enter" && menuIdx >= 0) {
+    e.preventDefault(); $("#s_model").value = els[menuIdx].textContent; closeModelMenu();
+  }
+});
+$("#btnModels").onclick = async () => {
+  const btn = $("#btnModels"), spin = $("#s_spin");
+  btn.disabled = true; spin.hidden = false;
+  $("#s_msg").textContent = t("models_fetching");
+  try {
+    await saveSettings(true);
+    const r = await api("/api/models");
+    MODELS = r.models;
+    openModelMenu(false);
+    $("#s_msg").textContent = t("models_found", {n: r.models.length});
+  } catch (e) { $("#s_msg").textContent = e.message; }
+  finally { btn.disabled = false; spin.hidden = true; }
+};
+async function saveSettings(keepOpen) {
+  const body = {};
+  for (const k of SFIELDS) body[k] = $("#s_" + k).value;
+  try { localStorage.setItem("motion", $("#s_motion").value); } catch {}
+  applyMotion();
+  if ($("#s_clear_key").checked) body.api_key = "__clear__"; else if ($("#s_api_key").value) body.api_key = $("#s_api_key").value;
+  if ($("#s_clear_brave").checked) body.brave_api_key = "__clear__"; else if ($("#s_brave_api_key").value) body.brave_api_key = $("#s_brave_api_key").value;
+  await jpost("/api/config", body);
+  setWebUi(await api("/api/config"));
+  if (!keepOpen) $("#dlgSettings").close();
+}
+$("#s_save").onclick = () => saveSettings(false).catch(e => { $("#s_msg").textContent = e.message; });
+
+/* ---------- add character ---------- */
+function renderEmoRows() {  // 言語を切り替えたときに作り直す(選んだファイルは消える)
+  const box = $("#a_imgs");
+  const keep = {};
+  box.querySelectorAll("input[type=file]").forEach(i => { if (i.files[0]) keep[i.dataset.emo] = i.files; });
+  box.innerHTML = EMOS.map(k =>
+    `<div class="emorow"><span>${t("emo_" + k)}</span><input type="file" accept="image/*" data-emo="${k}"></div>`).join("");
+  box.querySelectorAll("input[type=file]").forEach(i => { if (keep[i.dataset.emo]) i.files = keep[i.dataset.emo]; });
+}
+$("#btnAdd").onclick = () => { $("#a_msg").textContent = ""; $("#dlgAdd").showModal(); };
+$("#a_cancel").onclick = () => $("#dlgAdd").close();
+$("#a_save").onclick = async () => {
+  const fd = new FormData();
+  fd.append("name", $("#a_name").value); fd.append("persona", $("#a_persona").value); fd.append("greeting", $("#a_greeting").value); fd.append("motion", $("#a_motion").value);
+  document.querySelectorAll("#a_imgs input[type=file]").forEach(i => { if (i.files[0]) fd.append("img_" + i.dataset.emo, i.files[0]); });
+  $("#a_msg").textContent = t("a_registering");
+  try {
+    const r = await api("/api/characters", {method: "POST", body: fd});
+    $("#dlgAdd").close();
+    $("#a_name").value = $("#a_persona").value = $("#a_greeting").value = "";
+    document.querySelectorAll("#a_imgs input[type=file]").forEach(i => i.value = "");
+    await loadChars(r.id);
+  } catch (e) { $("#a_msg").textContent = e.message; }
+};
+
+/* ---------- web search ---------- */
+let hasBrave = false;
+function setWebUi(c) {
+  hasBrave = !!c.has_brave_key;
+  const sel = $("#webMode"), off = sel.querySelector('option[value="off"]');
+  sel.disabled = !hasBrave;
+  if (!hasBrave) {
+    sel.value = "off";
+    if (c.has_brave_key === undefined) {  // サーバーが古く、検索機能を持っていない
+      off.textContent = t("web_need_update");
+      sel.title = t("web_need_update_title");
+    } else {
+      off.textContent = t("web_nokey");
+      sel.title = t("web_nokey_title");
+    }
+    return;
+  }
+  off.textContent = t("web_off");
+  let v = "auto"; try { v = localStorage.getItem("webMode") || "auto"; } catch {}
+  sel.value = v; sel.title = t("web_title");
+}
+$("#webWrap").addEventListener("click", () => { if (!hasBrave && $("#webMode").disabled) openSettings(); });
+$("#webMode").addEventListener("change", e => { try { localStorage.setItem("webMode", e.target.value); } catch {} });
+function addWebInfo(r) {
+  if (!r.searched && !r.web_note) return;
+  const d = document.createElement("div"); d.className = "recall";
+  if (r.searched) {
+    d.append(t("searched", {q: r.searched}));
+    (r.sources || []).forEach((s, i) => {
+      if (!/^https?:\/\//.test(s.url)) return;
+      if (i) d.append(" / ");
+      const a = document.createElement("a"); a.href = s.url; a.target = "_blank"; a.rel = "noopener noreferrer";
+      a.textContent = (s.title || s.url).slice(0, 40); d.append(a);
+    });
+    if (r.web_note) d.append(" " + r.web_note);
+  } else { d.append("🔍 " + r.web_note); }
+  $("#log").append(d);
+}
+
+/* ---------- start ---------- */
+function applyMotion() {
+  let m = "on";
+  try { m = localStorage.getItem("motion") || "on"; } catch {}
+  const off = m === "off" || (m === "os" && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  document.body.dataset.motion = off ? "off" : "on";
+}
+applyMotion();
+// タブを閉じる/再読み込みするとき、まだ記憶に整理されていない発言をサーバーに整理させる
+addEventListener("pagehide", () => {
+  try { if (cur) navigator.sendBeacon("/api/flush/" + cur.id); } catch (e) {}
+});
+$("#uiLang").addEventListener("change", async e => {
+  LANG = e.target.value;
+  try { await jpost("/api/config", {ui_lang: LANG}); } catch {}
+  applyI18n();
+  setWebUi(await api("/api/config"));
+  await loadChars(cur && cur.id);   // 組み込みキャラの名前・あいさつも切り替わる
+});
+(async () => {
+  await initI18n();
+  await loadChars();
+  const c = await api("/api/config");
+  setWebUi(c);
+  if (!c.model) openSettings();
+})();
+</script>
+</body>
+</html>

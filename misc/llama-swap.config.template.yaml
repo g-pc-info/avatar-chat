@@ -1,0 +1,20 @@
+# llama-swap config template. setup-llm.bat copies this to llama-swap\config.yaml
+# and replaces __ROOT__ with the install folder (forward slashes).
+# Lines between "BEGIN lumimaid" and "END lumimaid" are removed when that model was not downloaded.
+# -c is the context length (increase it if VRAM allows). -ngl 99 puts all layers on the GPU.
+healthCheckTimeout: 300
+models:
+  "stheno-8b":
+    cmd: >
+      "__ROOT__/llama.cpp/llama-server.exe" --port ${PORT}
+      -m "__ROOT__/models/Llama-3.1-8B-Stheno-v3.4-Q4_K_M.gguf"
+      -ngl 99 -c 8192 -np 1 --jinja
+    ttl: 1800
+  # BEGIN lumimaid
+  "lumimaid-8b":
+    cmd: >
+      "__ROOT__/llama.cpp/llama-server.exe" --port ${PORT}
+      -m "__ROOT__/models/Lumimaid-v0.2-8B.q4_k_m.gguf"
+      -ngl 99 -c 8192 -np 1 --jinja
+    ttl: 1800
+  # END lumimaid

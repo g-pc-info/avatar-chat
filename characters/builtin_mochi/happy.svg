@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<line x1="215" y1="160" x2="185" y2="78" stroke="#219ebc" stroke-width="8" stroke-linecap="round"/><circle cx="184" cy="72" r="14" fill="#ffb703"/>
+<line x1="297" y1="160" x2="327" y2="78" stroke="#219ebc" stroke-width="8" stroke-linecap="round"/><circle cx="328" cy="72" r="14" fill="#ffb703"/>
+<ellipse cx="256" cy="305" rx="178" ry="152" fill="#8ecae6" stroke="#219ebc" stroke-width="8"/>
+<circle cx="165" cy="235" r="14" fill="#bde3f2"/><circle cx="352" cy="222" r="10" fill="#bde3f2"/><circle cx="330" cy="395" r="12" fill="#bde3f2"/>
+<path d="M180 292 Q205 258 230 292" stroke="#023047" stroke-width="9" fill="none" stroke-linecap="round"/>
+<path d="M282 292 Q307 258 332 292" stroke="#023047" stroke-width="9" fill="none" stroke-linecap="round"/>
+<ellipse cx="160" cy="325" rx="24" ry="14" fill="#ffafcc" opacity="0.8"/><ellipse cx="352" cy="325" rx="24" ry="14" fill="#ffafcc" opacity="0.8"/>
+<path d="M212 322 Q256 392 300 322 Z" fill="#9d0208" stroke="#023047" stroke-width="7" stroke-linejoin="round"/>
+<path d="M232 348 Q256 372 280 348 Q256 342 232 348 Z" fill="#ff758f"/>
+</svg>

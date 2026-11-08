@@ -1,0 +1,13 @@
+# ユーザーのデータ・自動で作られるもの(公開しない)
+user-data/
+system/
+downloads/
+llama.cpp/
+llama-swap/
+models/
+misc/downloads/
+misc/gen/
+__pycache__/
+*.pyc
+*.part
+*.log
