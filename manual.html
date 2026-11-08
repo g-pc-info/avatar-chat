@@ -9,13 +9,15 @@
 @media(prefers-color-scheme:dark){:root{--bg:#14181d;--panel:#1c2228;--text:#e6ebf0;--sub:#9aa7b4;--line:#2b343d;--accent:#3dbdac;--soft:#1f3a36;--warn:#3a3220;--warnline:#8a6d25;--code:#262e36}}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:16px}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.8 "Segoe UI","Yu Gothic UI","Meiryo",sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.8 "Segoe UI","Yu Gothic UI","Meiryo","Microsoft YaHei UI",sans-serif}
 .wrap{max-width:1080px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:28px}
 nav{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:20px 0}
 nav b{display:block;margin-bottom:6px;font-size:15px}
 nav a{display:block;padding:3px 10px;border-left:3px solid var(--line);color:var(--sub);text-decoration:none;font-size:14px;line-height:1.5;margin:2px 0}
 nav a:hover{color:var(--accent);border-left-color:var(--accent)}
 nav a.sub{padding-left:22px;font-size:13px}
+.langbar{font-size:13px;color:var(--sub);margin:0 0 8px}
+.langbar a{display:inline;border:0;padding:0 4px;margin:0;font-size:13px;color:var(--accent)}
 main{padding:20px 0 80px;min-width:0}
 h1{font-size:28px;margin:0 0 4px}
 h2{font-size:22px;margin:44px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
@@ -41,37 +43,44 @@ th{background:var(--panel)}
 footer{color:var(--sub);font-size:13px;margin-top:50px}
 @media(max-width:820px){.wrap{display:block}nav{position:static;max-height:none;padding-bottom:0}}
 @media print{nav{display:none}.wrap{display:block}body{background:#fff;color:#000}}
+.tabbar{max-width:1080px;margin:0 auto;padding:14px 16px 0;display:flex;gap:6px;flex-wrap:wrap}
+.tabbar button{font:inherit;font-size:14px;padding:6px 16px;border:1px solid var(--line);border-bottom:2px solid var(--line);border-radius:8px 8px 0 0;background:var(--panel);color:var(--sub);cursor:pointer}
+.tabbar button:hover{color:var(--accent)}
+.tabbar button[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.wrap[hidden]{display:none}
+@media print{.tabbar{display:none}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="tabbar" role="tablist"><button type="button" role="tab" data-t="ja">日本語</button><button type="button" role="tab" data-t="en">English</button><button type="button" role="tab" data-t="zh">简体中文</button><button type="button" role="tab" data-t="es">Español</button><button type="button" role="tab" data-t="pt">Português</button></div>
+<div class="wrap" lang="ja" data-lang="ja" hidden>
 <nav>
   <b>目次</b>
-  <a href="#intro">1. Avatar Chat とは</a>
-  <a href="#start">2. 起動と終了</a>
-  <a href="#screen">3. 画面の見かた</a>
-  <a href="#settings">4. 設定</a>
-  <a href="#memory">5. 記憶のしくみ</a>
-  <a href="#web">6. ネット検索と天気</a>
-  <a href="#addchar">7. キャラを追加する</a>
-  <a href="#avatar">8. アバターの作り方</a>
-  <a class="sub" href="#av-spec">画像の仕様</a>
-  <a class="sub" href="#av-emo">8つの表情</a>
-  <a class="sub" href="#av-make">作るときのコツ</a>
-  <a class="sub" href="#av-motion">動き方の選び方</a>
-  <a class="sub" href="#av-persona">性格設定の書き方</a>
-  <a class="sub" href="#av-file">ファイルで作る(上級)</a>
-  <a href="#lang">9. 言語の切り替え</a>
-  <a href="#data">10. データ・バックアップ・更新</a>
-  <a href="#trouble">11.困ったとき</a>
-  <a href="#tools">12. 付録: 作る人向けの道具</a>
+  <a href="#ja-intro">1. Avatar Chat とは</a>
+  <a href="#ja-start">2. 起動と終了</a>
+  <a href="#ja-screen">3. 画面の見かた</a>
+  <a href="#ja-settings">4. 設定</a>
+  <a href="#ja-memory">5. 記憶のしくみ</a>
+  <a href="#ja-web">6. ネット検索と天気</a>
+  <a href="#ja-addchar">7. キャラを追加する</a>
+  <a href="#ja-avatar">8. アバターの作り方</a>
+  <a class="sub" href="#ja-av-spec">画像の仕様</a>
+  <a class="sub" href="#ja-av-emo">8つの表情</a>
+  <a class="sub" href="#ja-av-make">作るときのコツ</a>
+  <a class="sub" href="#ja-av-motion">動き方の選び方</a>
+  <a class="sub" href="#ja-av-persona">性格設定の書き方</a>
+  <a class="sub" href="#ja-av-file">ファイルで作る(上級)</a>
+  <a href="#ja-lang">9. 言語の切り替え</a>
+  <a href="#ja-data">10. データ・バックアップ・更新</a>
+  <a href="#ja-trouble">11.困ったとき</a>
+  <a href="#ja-tools">12. 付録: 作る人向けの道具</a>
 </nav>
 
 <main>
 <h1>Avatar Chat マニュアル</h1>
 <p class="lead">OpenAI互換のLLMとおしゃべりすると、返事の内容に合わせてアバターの表情が変わるチャットです。このマニュアルは <code>start.bat</code> と同じフォルダに入っています。</p>
 
-<h2 id="intro">1. Avatar Chat とは</h2>
+<h2 id="ja-intro">1. Avatar Chat とは</h2>
 <ul>
   <li><b>表情が変わる</b> … 返事のたびにLLMが気持ち(うれしい・かなしい…)を選び、その表情の画像に切り替わります。</li>
   <li><b>キャラごとの記憶</b> … 会話から覚えておくべきことを自動でメモし、時間とともに薄れていきます。キャラ同士では共有されません。</li>
@@ -81,7 +90,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
   <li><b>自分のPCだけで動く</b> … 会話・記憶は自分のPC内(<code>user-data</code>)に保存されます。外に出るのは、LLMへの送信(自分のサーバーなら外に出ません)と、ネット検索を使ったときの検索語だけです。</li>
 </ul>
 
-<h2 id="start">2. 起動と終了</h2>
+<h2 id="ja-start">2. 起動と終了</h2>
 <h3>はじめて起動する</h3>
 <ol>
   <li><code>start.bat</code> をダブルクリックします。黒い画面が開き、初回だけ Python などを自動でダウンロードします(インターネット接続が必要。数分かかります)。</li>
@@ -112,7 +121,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
 <h3>セットアップをやり直したい</h3>
 <p><code>misc</code> フォルダの <code>setup-llm.bat</code> をダブルクリックします(同じメニューが出ます)。ダウンロード済みのファイルは再利用されます。</p>
 
-<h2 id="screen">3. 画面の見かた</h2>
+<h2 id="ja-screen">3. 画面の見かた</h2>
 <div class="ph">
   <div><b>左:キャラ一覧</b>キャラを選ぶ/<code>＋キャラ追加</code>/言語の切り替え/<code>設定</code></div>
   <div><b>中央:会話</b>上にアバターと名前、下に会話ログと入力欄。入力欄の横で検索のモードを選べます。</div>
@@ -133,7 +142,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
   <tr><td>右の記憶の「×」</td><td>その記憶ひとつを消します。まちがって覚えてしまったときに使います。</td></tr>
 </table></div>
 
-<h2 id="settings">4. 設定</h2>
+<h2 id="ja-settings">4. 設定</h2>
 <p>左下の<code>設定</code>ボタンで開きます。変更したら<code>保存</code>を押します。</p>
 <div class="tablewrap"><table>
   <tr><th>項目</th><th>意味</th></tr>
@@ -151,7 +160,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
 </table></div>
 <div class="box warn"><b class="t">APIキーの保存</b>キーは <code>user-data\config.json</code> に<b>平文</b>で保存されます。このフォルダを他人に渡したり、ネットに公開したりしないでください。</div>
 
-<h2 id="memory">5. 記憶のしくみ</h2>
+<h2 id="ja-memory">5. 記憶のしくみ</h2>
 <ul>
   <li>数回話すごとに、LLMが「覚えておくべきこと」(名前・好み・約束など)を取り出してメモします。</li>
   <li>メモには<b>重要度</b>(1〜5)がつきます。重要なほど長く残ります。</li>
@@ -162,7 +171,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
 </ul>
 <p>覚え間違いは右の記憶の「×」で消せます。</p>
 
-<h2 id="web">6. ネット検索と天気</h2>
+<h2 id="ja-web">6. ネット検索と天気</h2>
 <p>最新の話題や、知らないことを聞かれたとき、ネットを検索して答えに使えます。</p>
 <ol>
   <li><a href="https://brave.com/search/api/">Brave Search API</a>(外部サイト)でAPIキーを取得します。</li>
@@ -182,38 +191,38 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
 </ul>
 <div class="box warn"><b class="t">プライバシー</b>検索を使うと、検索語が Brave に送られます。会話の全文は送られません。</div>
 
-<h2 id="addchar">7. キャラを追加する</h2>
+<h2 id="ja-addchar">7. キャラを追加する</h2>
 <ol>
   <li>左の<code>＋キャラ追加</code>を押します。</li>
   <li>次を入力します。
     <div class="tablewrap"><table>
       <tr><th>項目</th><th>書くこと</th></tr>
       <tr><td>名前</td><td>必須。</td></tr>
-      <tr><td>性格・口調の設定</td><td>キャラの人格の元になります。書き方は<a href="#av-persona">8章</a>。</td></tr>
+      <tr><td>性格・口調の設定</td><td>キャラの人格の元になります。書き方は<a href="#ja-av-persona">8章</a>。</td></tr>
       <tr><td>最初のあいさつ</td><td>省略可。キャラ選択時、最初に表示されます。</td></tr>
-      <tr><td>アバターの動き方</td><td>「生き物・デフォルメ」か「人間型」(<a href="#av-motion">違い</a>)。</td></tr>
+      <tr><td>アバターの動き方</td><td>「生き物・デフォルメ」か「人間型」(<a href="#ja-av-motion">違い</a>)。</td></tr>
       <tr><td>表情画像</td><td><b>neutral(ふつう)は必須</b>。ほかは省略可。足りない表情はneutralで代わりに表示されます。</td></tr>
     </table></div>
   </li>
   <li><code>追加</code>を押すと、キャラ一覧に増えます。</li>
 </ol>
 <p>追加したキャラは <code>user-data\characters</code> に保存されます。削除はそのキャラを選んで<code>キャラ削除</code>です。</p>
-<div class="box tip"><b class="t">まず neutral だけで試す</b>最初は neutral の1枚だけで追加して、動きを確かめてから、ほかの表情を足していくのがおすすめです。画面からの追加は新規作成のみで、あとから画像を差し替えるにはキャラを作り直すか、<a href="#av-file">ファイルを直接</a>置き換えます。</div>
+<div class="box tip"><b class="t">まず neutral だけで試す</b>最初は neutral の1枚だけで追加して、動きを確かめてから、ほかの表情を足していくのがおすすめです。画面からの追加は新規作成のみで、あとから画像を差し替えるにはキャラを作り直すか、<a href="#ja-av-file">ファイルを直接</a>置き換えます。</div>
 
-<h2 id="avatar">8. アバターの作り方</h2>
+<h2 id="ja-avatar">8. アバターの作り方</h2>
 <p>アバターは「表情ごとの画像」を入れ替えて見せているだけです。<b>絵が描ける人も、画像生成AIを使う人も、同じ手順</b>で自分のキャラを作れます。</p>
 
-<h3 id="av-spec">画像の仕様</h3>
+<h3 id="ja-av-spec">画像の仕様</h3>
 <div class="tablewrap"><table>
   <tr><th>項目</th><th>内容</th></tr>
-  <tr><td>形式</td><td>PNG・JPEG・WebP など(画面から追加するとき)。SVGは画面からは追加できません(<a href="#av-file">ファイルで置く</a>場合のみ可)。</td></tr>
+  <tr><td>形式</td><td>PNG・JPEG・WebP など(画面から追加するとき)。SVGは画面からは追加できません(<a href="#ja-av-file">ファイルで置く</a>場合のみ可)。</td></tr>
   <tr><td>背景</td><td><b>透過</b>(背景なし)がおすすめ。背景つきでも使えますが、四角い枠が見えます。</td></tr>
   <tr><td>大きさ</td><td>自動で<b>長辺768px以内</b>のWebPに変換されます(縮小のみ。小さい画像は拡大されません)。表示は高さ300px程度なので、512〜768px四方もあれば十分です。</td></tr>
   <tr><td>枚数</td><td>neutral必須+最大7枚(計8表情)。</td></tr>
   <tr><td>向き・構図</td><td>全身でも上半身でも可。ただし表示が小さいので、<b>顔がはっきり見える</b>構図にしてください。</td></tr>
 </table></div>
 
-<h3 id="av-emo">8つの表情</h3>
+<h3 id="ja-av-emo">8つの表情</h3>
 <p>LLMは、次の説明を見て「今の返事にはどの表情が合うか」を選びます。</p>
 <div class="tablewrap"><table>
   <tr><th>名前</th><th>日本語</th><th>使われる場面</th></tr>
@@ -228,7 +237,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
 </table></div>
 <p>全部そろえなくても動きますが、<b>neutral・happy・sad</b> の3つがあると印象がだいぶ変わります。</p>
 
-<h3 id="av-make">作るときのコツ</h3>
+<h3 id="ja-av-make">作るときのコツ</h3>
 <ul>
   <li><b>同じ人に見えること</b>が一番大事です。表情ごとに顔立ち・髪型・服が変わると、別人に見えてしまいます。</li>
   <li><b>画像生成AIで作る場合</b>
@@ -245,7 +254,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
   <li><b>権利に注意</b> … 他人が描いた絵や、利用条件のあるモデル・素材は、そのルールに従ってください。公開・配布するときは特に確認を。</li>
 </ul>
 
-<h3 id="av-motion">動き方の選び方</h3>
+<h3 id="ja-av-motion">動き方の選び方</h3>
 <div class="tablewrap"><table>
   <tr><th>種類</th><th>動き</th><th>向いているキャラ</th></tr>
   <tr><td>生き物・デフォルメ(<code>squash</code>)</td><td>つぶれたり伸びたりして、はずみます。うれしいときは跳ねます。</td><td>マスコット・動物・不思議な生き物。</td></tr>
@@ -253,7 +262,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
 </table></div>
 <p>人間の絵を「生き物」にすると、体がぐにゃっと歪んで不自然に見えます。人間型にしてください。動きが邪魔なときは、設定の<code>アバターの動き</code>で切れます。</p>
 
-<h3 id="av-persona">性格設定の書き方</h3>
+<h3 id="ja-av-persona">性格設定の書き方</h3>
 <p>「性格・口調の設定」は、そのままLLMに渡されます。<b>短く具体的に</b>書くほど、小さなモデルでも安定します。組み込みキャラ(<code>characters</code> フォルダの <code>character.json</code>)が見本になります。</p>
 <ul>
   <li><b>基本情報</b> … 年齢・一人称・あなた(相手)への気持ち。</li>
@@ -268,7 +277,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
 - 聞かれたことに答える。同じ言葉を繰り返さない。
 - 褒められると照れる。</code></pre>
 
-<h3 id="av-file">ファイルで作る(上級)</h3>
+<h3 id="ja-av-file">ファイルで作る(上級)</h3>
 <p>画面からでは足りないとき(SVG画像を使う、表情を8つ以外に増やす、設定を直すなど)は、フォルダとファイルを直接作れます。</p>
 <ol>
   <li><code>user-data\characters</code> の中に、好きな名前(英数字)のフォルダを作ります。例: <code>user-data\characters\sakura</code></li>
@@ -295,7 +304,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
   <li>編集前に、<code>user-data</code> をバックアップしておくと安心です(10章)。JSONの <code>,</code> や <code>"</code> を間違えると、そのキャラが一覧から消えます。</li>
 </ul>
 
-<h2 id="lang">9. 言語の切り替え</h2>
+<h2 id="ja-lang">9. 言語の切り替え</h2>
 <p>左下の言語メニューで、日本語・English・简体中文・Español・Português を選べます。切り替えると次のものが変わります。</p>
 <ul>
   <li>画面の文字、エラーなどのメッセージ。</li>
@@ -308,11 +317,11 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
     <li>英語・中国語・スペイン語・ポルトガル語の画面と組み込みキャラの翻訳は機械翻訳で、ネイティブの確認はしていません。不自然な表現があるかもしれません。</li>
     <li>モデルによって得意な言語が違います。Stheno などの小型モデルは、英語が最も安定します。日本語は弱めです。</li>
     <li>言語を切り替えても、すでにある会話ログの言語は変わりません。</li>
-    <li>このマニュアルは日本語のみです。</li>
+    <li>このマニュアルは日本語・English・简体中文・Español・Português の5言語です(上のタブで切り替え)。翻訳は機械翻訳です。</li>
   </ul>
 </div>
 
-<h2 id="data">10. データ・バックアップ・更新</h2>
+<h2 id="ja-data">10. データ・バックアップ・更新</h2>
 <div class="tablewrap"><table>
   <tr><th>フォルダ / ファイル</th><th>中身</th><th>消すと</th></tr>
   <tr><td><code>user-data\</code></td><td>設定(<code>config.json</code>)・会話と記憶(<code>app.db</code>)・追加したキャラ</td><td><b>全部消えます。</b>これだけバックアップすれば引っ越し可能。</td></tr>
@@ -326,12 +335,12 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
 <h3>更新する</h3>
 <ol>
   <li>新しい zip を展開します。</li>
-  <li>中の <code>app</code>・<code>characters</code>・<code>misc</code> フォルダと <code>start.bat</code>・<code>manual.html</code> を、今のフォルダに<b>上書きコピー</b>します。</li>
+  <li>中の <code>app</code>・<code>characters</code>・<code>misc</code> フォルダと <code>start.bat</code>・<code>manual.html</code>を、今のフォルダに<b>上書きコピー</b>します。</li>
   <li><code>start.bat</code> で起動します。</li>
 </ol>
 <p><code>user-data</code>・<code>system</code>・<code>models</code> などは zip に入っていないので、<b>上書きしても消えません</b>。</p>
 
-<h2 id="trouble">11. 困ったとき</h2>
+<h2 id="ja-trouble">11. 困ったとき</h2>
 <div class="tablewrap"><table>
   <tr><th>症状</th><th>確認すること</th></tr>
   <tr><td>「モデル名を設定画面で…」と出る</td><td><code>設定</code> の<code>モデル名</code>が空です。「一覧を取得」で選んで保存してください。</td></tr>
@@ -339,15 +348,15 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
   <tr><td>最初の返事がとても遅い</td><td>最初の1回はモデルをGPUに読み込むため、数十秒かかります。2回目以降は速くなります。</td></tr>
   <tr><td>いつも遅い/途中で止まる</td><td>GPUのメモリ不足かもしれません。ほかのアプリ(ゲーム・画像生成など)を閉じる、<code>設定</code>の<code>履歴の往復数</code>を減らす、<code>llama-swap\config.yaml</code> の <code>-c 8192</code> を <code>-c 4096</code> にする、を試してください。</td></tr>
   <tr><td>返事の形式が崩れる、同じことを繰り返す</td><td><code>温度</code>を 0.5〜0.7 に下げる。それでも直らないときは別のモデルを試します。アプリ側でも、崩れた返事は読み取り直しと再試行をします。</td></tr>
-  <tr><td>表情が変わらない</td><td>そのキャラに表情画像が1枚(neutralだけ)しかないかもしれません。<a href="#av-emo">表情を足してください</a>。</td></tr>
+  <tr><td>表情が変わらない</td><td>そのキャラに表情画像が1枚(neutralだけ)しかないかもしれません。<a href="#ja-av-emo">表情を足してください</a>。</td></tr>
   <tr><td>記憶が増えない</td><td>数回話すごとに整理されます。<code>記憶を整理する間隔</code>を小さくする、または<code>会話を消す</code>で今までの分が整理されます。</td></tr>
   <tr><td>ブラウザが開かない</td><td>手動で <code>http://127.0.0.1:8765</code> を開いてください。ポートが使用中のときは自動で次の番号(8766…)になります。黒い画面に出ているアドレスを見てください。</td></tr>
   <tr><td>検索が動かない</td><td>Braveのキーが未設定、または入力欄横のメニューが「なし」です。6章を見てください。</td></tr>
   <tr><td>セットアップのダウンロードが失敗した</td><td>インターネット接続を確認して、もう一度 <code>start.bat</code>(または <code>misc\setup-llm.bat</code>)を開きます。続きから再開します。</td></tr>
-  <tr><td>キャラが一覧から消えた</td><td><code>character.json</code> の書式ミスの可能性があります。<a href="#av-file">8章のファイルで作る</a>の例と見比べてください。</td></tr>
+  <tr><td>キャラが一覧から消えた</td><td><code>character.json</code> の書式ミスの可能性があります。<a href="#ja-av-file">8章のファイルで作る</a>の例と見比べてください。</td></tr>
 </table></div>
 
-<h2 id="tools">12. 付録: 作る人向けの道具(上級)</h2>
+<h2 id="ja-tools">12. 付録: 作る人向けの道具(上級)</h2>
 <p>アバターの画像づくりや配布物づくりに使う、コマンドラインのスクリプトです。<b>普通に使うだけなら、この章は読まなくて大丈夫です。</b>どれも <code>misc</code> フォルダに入っています。</p>
 <div class="box warn"><b class="t">前提</b>コマンドは、<code>start.bat</code> と同じフォルダで、コマンドプロンプトか PowerShell を開いて実行します。<code>start.bat</code> で入る Python(<code>system\python\python.exe</code>)を使います。下の例の <code>py</code> は、これを短く書いたものです。<br>
   <code>set py=system\python\python.exe</code>(コマンドプロンプト)/ <code>$py = "system\python\python.exe"</code>(PowerShell)</div>
@@ -360,7 +369,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
   <tr><td><code>smoke_test.py</code></td><td>ダミーのLLMでアプリを動かして、動作を一通り確かめる</td><td><code>%py% misc\smoke_test.py</code></td></tr>
 </table></div>
 
-<h3 id="tool-gen">表情の立ち絵を自動で作る(gen_images.py → make_sprites.py)</h3>
+<h3 id="ja-tool-gen">表情の立ち絵を自動で作る(gen_images.py → make_sprites.py)</h3>
 <p>同じキャラの8つの表情を、まとめて作る流れです。<b>ComfyUI が動いていて、モデルが入っている</b>必要があります。</p>
 <ol>
   <li>設定ファイル(JSON)を作ります。下の例を、コピーして直してください。</li>
@@ -368,7 +377,7 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
     <code>set COMFY_HOST=http://127.0.0.1:8188</code></li>
   <li><code>%py% misc\gen_images.py 設定.json</code> を実行します。表情ごとに1枚ずつ作り、<code>outdir</code> に <code>表情名.png</code> で保存します。特定の表情だけ作り直すときは、あとにカンマ区切りで付けます(例: <code>設定.json sad,happy</code>)。</li>
   <li><code>%py% misc\make_sprites.py PNGのフォルダ 出力フォルダ</code> で、背景を透明にした WebP にします。この変換で、PNG に埋め込まれたプロンプトなどの情報は消えます。</li>
-  <li>できた WebP を、<a href="#addchar">キャラの追加</a>の画面から登録します。</li>
+  <li>できた WebP を、<a href="#ja-addchar">キャラの追加</a>の画面から登録します。</li>
 </ol>
 <pre><code>{
   "outdir": "misc/gen/mychar",
@@ -389,22 +398,1491 @@ footer{color:var(--sub);font-size:13px;margin-top:50px}
   }
 }</code></pre>
 <ul>
-  <li><code>base</code> は全部の表情で共通の見た目、<code>variants</code> は表情ごとに足す言葉です。<b>seed と base を変えない</b>ことで、顔立ちがそろいます(<a href="#av-make">作るときのコツ</a>)。</li>
+  <li><code>base</code> は全部の表情で共通の見た目、<code>variants</code> は表情ごとに足す言葉です。<b>seed と base を変えない</b>ことで、顔立ちがそろいます(<a href="#ja-av-make">作るときのコツ</a>)。</li>
   <li>基準になる1枚から表情だけ変えたいときは、<code>"init_image": "基準画像.png"</code> と <code>"denoise": 0.6</code> のように足します(denoise が小さいほど元の絵に近くなります)。表情ごとに変えたいときは <code>"variant_denoise": {"sad": 0.7}</code>。</li>
   <li>背景を透明にする処理は、<b>白(単色)の背景</b>を前提にしています。<code>base</code> に <code>white background</code> を入れてください。</li>
   <li>1枚あたり数十秒かかります。5分たっても終わらないと、その表情はエラーになります。</li>
   <li>ComfyUI のワークフローは、基本的な1モデル構成(checkpoint → KSampler → 保存)のものを自動で組み立てます。LoRA や ControlNet は使えません。</li>
 </ul>
 
-<h3 id="tool-zip">配布用の zip を作る(make_zip.py)</h3>
+<h3 id="ja-tool-zip">配布用の zip を作る(make_zip.py)</h3>
 <p>プロジェクトのフォルダから、<code>user-data</code>(会話や設定)、<code>system</code>、<code>downloads</code>、<code>llama.cpp</code>、<code>llama-swap</code>、<code>models</code>、作業用の <code>gen</code> を除いた zip を作ります。出力先は、プロジェクトの1つ上の <code>avatar-chat-dist\avatar-chat.zip</code> です。別の場所にしたいときは、最後に出力先を付けます(例: <code>%py% misc\make_zip.py C:\temp\a.zip</code>)。</p>
 
-<h3 id="tool-test">動作確認(smoke_test.py)</h3>
+<h3 id="ja-tool-test">動作確認(smoke_test.py)</h3>
 <p>一時フォルダにプロジェクトをコピーして、ダミーのLLMでアプリを起動し、画面から使うAPIを一通り試します。最後に <code>RESULT: ALL PASSED</code> と出れば成功です。あなたの <code>user-data</code> には触れません。コードを直したあとの確認に使います。</p>
 <div class="box tip"><b class="t">注意</b>これらのスクリプトは、作者の環境(Linux)で作り、動かしてきたものです。Windows の <code>system\python</code> で、すべて実際に試したわけではありません。動かないときは、エラーの内容を手がかりに調べてください。</div>
 
 <footer>Avatar Chat マニュアル</footer>
 </main>
 </div>
+<div class="wrap" lang="en" data-lang="en" hidden>
+<nav>
+  <b>Contents</b>
+  <a href="#en-intro">1. What is Avatar Chat?</a>
+  <a href="#en-start">2. Starting and quitting</a>
+  <a href="#en-screen">3. The screen</a>
+  <a href="#en-settings">4. Settings</a>
+  <a href="#en-memory">5. How memory works</a>
+  <a href="#en-web">6. Web search and weather</a>
+  <a href="#en-addchar">7. Adding a character</a>
+  <a href="#en-avatar">8. Making an avatar</a>
+  <a class="sub" href="#en-av-spec">Image specs</a>
+  <a class="sub" href="#en-av-emo">The 8 expressions</a>
+  <a class="sub" href="#en-av-make">Tips for making them</a>
+  <a class="sub" href="#en-av-motion">Choosing a motion style</a>
+  <a class="sub" href="#en-av-persona">Writing the personality</a>
+  <a class="sub" href="#en-av-file">Using files (advanced)</a>
+  <a href="#en-lang">9. Switching language</a>
+  <a href="#en-data">10. Data, backup and updating</a>
+  <a href="#en-trouble">11. Troubleshooting</a>
+  <a href="#en-tools">12. Appendix: tools for creators</a>
+</nav>
+
+<main>
+<h1>Avatar Chat Manual</h1>
+<p class="lead">A chat app where you talk with an OpenAI-compatible LLM and the avatar's expression changes to match each reply. This manual is in the same folder as <code>start.bat</code>.</p>
+
+<h2 id="en-intro">1. What is Avatar Chat?</h2>
+<ul>
+  <li><b>Expressions change</b> … With every reply the LLM picks a feeling (happy, sad…) and the avatar switches to the matching image.</li>
+  <li><b>Memory per character</b> … Things worth remembering are noted automatically from your chats and fade over time. Characters do not share memories.</li>
+  <li><b>Add your own characters</b> … Use any images you like (chapters 7 and 8).</li>
+  <li><b>Web search and weather</b> … Looks things up only when needed (chapter 6; a Brave Search API key is required).</li>
+  <li><b>Interface in 5 languages</b> … 日本語, English, 简体中文, Español, Português.</li>
+  <li><b>Runs on your PC only</b> … Chats and memories are saved on your PC (<code>user-data</code>). The only things that leave it are what is sent to the LLM (nothing leaves if it is your own server) and the search words when you use web search.</li>
+</ul>
+
+<h2 id="en-start">2. Starting and quitting</h2>
+<h3>First launch</h3>
+<ol>
+  <li>Double-click <code>start.bat</code>. A black window opens and, only the first time, downloads Python and other parts automatically (internet connection required; takes a few minutes).</li>
+  <li>Next, the "Local LLM setup" menu appears. <b>Just press a number key</b>.
+    <div class="tablewrap"><table>
+      <tr><th>Choice</th><th>When to pick it</th></tr>
+      <tr><td>1 Radeon</td><td>AMD graphics card. Installs the Vulkan build of llama.cpp. It may also work with Intel GPUs and integrated GPUs (not verified; integrated GPUs share system memory, so it can be slow or fail).</td></tr>
+      <tr><td>2 GeForce RTX 20 series or later</td><td>NVIDIA graphics card (8 GB VRAM or more). Installs the CUDA build.</td></tr>
+      <tr><td>3 I already have an LLM server</td><td>For people using LM Studio, Ollama, llama.cpp, etc. Only the address is registered (no server is installed).</td></tr>
+      <tr><td>4 Skip</td><td>Do nothing for now. Enter the details yourself later in Settings.</td></tr>
+    </table></div>
+    Your graphics card name is shown above the menu. If unsure, choose by that.
+  </li>
+  <li>If you choose 1 or 2, llama.cpp, llama-swap and a model (Stheno v3.4 8B, about 4.9 GB) are downloaded automatically. To be kind to the servers, the model is downloaded <b>deliberately slowly (about 17 minutes)</b>. <b>Do not close the black window</b>. Even if you do, opening <code>start.bat</code> again resumes where it stopped.<br>
+    You will also be asked whether to install a second model (Lumimaid v0.2 8B). If unsure, "1 No" is fine.<br>
+    <b>Note:</b> Both Stheno and Lumimaid are already somewhat old models and are <b>weak in Japanese</b> (phrasing can sound unnatural or sentences can come out odd). This is a compromise for what runs in 8 GB of VRAM. If you want better quality in Japanese, swap in a larger or different model in <code>llama-swap\config.yaml</code> (it will not run if you lack the VRAM).</li>
+  <li>When it finishes, the browser opens automatically with the chat screen. If it does not, open <code>http://127.0.0.1:8765</code> in your browser.</li>
+</ol>
+<div class="box tip"><b class="t">From the second time on</b>The menu does not appear. Just double-click <code>start.bat</code> (the LLM server starts with it).</div>
+
+<h3>Quitting</h3>
+<ul>
+  <li>Close the app's black window (the <code>start.bat</code> window).</li>
+  <li>The LLM server installed by the setup (llama-swap) runs in <b>a separate small window (minimized to the taskbar)</b>. Close that one too when you are done (closing it frees the GPU memory).</li>
+  <li>Even if you close it suddenly mid-chat, the conversation up to that point is saved, and anything not yet turned into memories is processed at the next start.</li>
+</ul>
+
+<h3>Redoing the setup</h3>
+<p>Double-click <code>setup-llm.bat</code> in the <code>misc</code> folder (the same menu appears). Files already downloaded are reused.</p>
+
+<h2 id="en-screen">3. The screen</h2>
+<div class="ph">
+  <div><b>Left: character list</b>Choose a character / <code>+ Add character</code> / language / <code>⚙ Settings</code></div>
+  <div><b>Center: chat</b>Avatar and name on top, the chat log and input box below. Next to the input box you choose the search mode.</div>
+  <div><b>Right: memories</b>What that character remembers. The shorter the bar, the closer it is to being forgotten.</div>
+</div>
+<h3>Chatting</h3>
+<ul>
+  <li>Type in the box at the bottom and press <b>Send</b> (or <kbd>Enter</kbd>). A new line is <kbd>Shift</kbd>+<kbd>Enter</kbd>.</li>
+  <li>When a reply arrives the avatar's expression changes, then returns to the original one (neutral) after a while.</li>
+  <li>While a reply is slow you see "…". The very first reply, when the model is being loaded, takes especially long.</li>
+  <li>When the character answers using a memory, "Remembered: …" appears faintly under the message.</li>
+</ul>
+<h3>Buttons</h3>
+<div class="tablewrap"><table>
+  <tr><th>Button</th><th>What it does</th></tr>
+  <tr><td>Clear chat</td><td>Deletes the chat log with that character. Before deleting, anything not yet remembered is turned into memories, so <b>the memories remain</b>.</td></tr>
+  <tr><td>Delete character</td><td>Shown only for characters you added. The chat and all memories are deleted and <b>cannot be restored</b>. The built-in characters (Mochi, Honoka, Rei) cannot be deleted.</td></tr>
+  <tr><td>The "×" on a memory (right)</td><td>Deletes that one memory. Use it when something was remembered wrongly.</td></tr>
+</table></div>
+
+<h2 id="en-settings">4. Settings</h2>
+<p>Open it with the <code>⚙ Settings</code> button at the bottom left. After changing something, press <code>Save</code>.</p>
+<div class="tablewrap"><table>
+  <tr><th>Item</th><th>Meaning</th></tr>
+  <tr><td>Server URL</td><td>The address of the LLM server. If you used the setup, <code>http://127.0.0.1:8080/v1</code>. LM Studio: <code>http://127.0.0.1:1234/v1</code>; Ollama: <code>http://127.0.0.1:11434/v1</code>.</td></tr>
+  <tr><td>API key</td><td>Leave empty for a server on your own PC. Enter one only when using an external service. After saving, it shows "Already set".</td></tr>
+  <tr><td>Model name</td><td>The model to use. Press "Get list" on the right to list the models on the server. Click the field to see all candidates; type to filter. If you ran the setup: <code>stheno-8b</code> (and <code>lumimaid-8b</code> if you installed the second one).</td></tr>
+  <tr><td>What the character calls you</td><td>The name the character uses for you.</td></tr>
+  <tr><td>Brave Search API key</td><td>Only for web search. See chapter 6.</td></tr>
+  <tr><td>Search country code / number of results</td><td>The country for search results (e.g. <code>US</code>) and how many results to fetch (1–10).</td></tr>
+  <tr><td>Avatar motion</td><td>Choose the avatar's idle motion: "Always on / Follow the OS setting / Off" (this setting applies to this screen only). Choose "Off" if the motion bothers you.</td></tr>
+  <tr><td>Temperature</td><td>How varied replies are. Higher is freer, lower is steadier (default 0.8). If replies fall apart, lowering it to 0.5–0.7 makes them more stable.</td></tr>
+  <tr><td>History turns</td><td>How much recent conversation is sent to the LLM each time (default 12 turns). More helps it keep context but makes it heavier.</td></tr>
+  <tr><td>Memory interval</td><td>After how many of your messages memories are organized (default 2). Smaller means it remembers sooner but calls the LLM more often.</td></tr>
+  <tr><td>Memory base days</td><td>The larger, the more slowly things are forgotten (default 10 days). See chapter 5.</td></tr>
+</table></div>
+<div class="box warn"><b class="t">Where keys are stored</b>Keys are saved in <b>plain text</b> in <code>user-data\config.json</code>. Do not give this folder to others or publish it on the internet.</div>
+
+<h2 id="en-memory">5. How memory works</h2>
+<ul>
+  <li>Every few exchanges, the LLM picks out "things worth remembering" (names, preferences, promises…) and takes notes.</li>
+  <li>Each note gets an <b>importance</b> (1–5). The more important, the longer it lasts.</li>
+  <li>As time passes the <b>strength</b> (bar length) drops. But each time it comes up in conversation and is recalled, it <b>gets stronger and harder to forget</b>.</li>
+  <li>A memory whose strength has dropped too low is no longer recalled.</li>
+  <li>Memories are kept <b>per character</b>. What you told Mochi, Honoka does not know.</li>
+  <li>When you close the tab, use "Clear chat", or start the app again, any conversation not yet organized is automatically turned into memories.</li>
+</ul>
+<p>Wrong memories can be removed with the "×" on the right.</p>
+
+<h2 id="en-web">6. Web search and weather</h2>
+<p>When asked about recent topics or things it does not know, the character can search the web and use the results in its answer.</p>
+<ol>
+  <li>Get an API key from the <a href="https://brave.com/search/api/">Brave Search API</a> (external site).</li>
+  <li>Paste it into <code>⚙ Settings</code> → <code>Brave Search API key</code> and save.</li>
+  <li>Choose a mode in the menu next to the input box.
+    <ul>
+      <li><b>🔍 Auto</b> … Searches only when the character decides it is needed (default).</li>
+      <li><b>🔍 Always</b> … Searches every time.</li>
+      <li><b>🔍 Off</b> … Never searches.</li>
+    </ul>
+  </li>
+</ol>
+<ul>
+  <li>When no key is set, the menu shows "🔍 No key". Click it to open Settings.</li>
+  <li>When a search was made, the search words and source links appear under the message.</li>
+  <li><b>Weather questions</b> that include a place in Japan (e.g. "What's the weather in Fukuoka tomorrow?") are answered with <b>official Japan Meteorological Agency data</b> instead of a search (works in English and other languages too). It works when the search mode is not "Off". In the current screen design, <b>without a Brave Search API key the search mode cannot be used, and this weather feature does not work either</b> (fetching the weather itself costs nothing).</li>
+</ul>
+<div class="box warn"><b class="t">Privacy</b>When you use search, the search words are sent to Brave. The full conversation is not sent.</div>
+
+<h2 id="en-addchar">7. Adding a character</h2>
+<ol>
+  <li>Press <code>+ Add character</code> on the left.</li>
+  <li>Fill in the following.
+    <div class="tablewrap"><table>
+      <tr><th>Item</th><th>What to write</th></tr>
+      <tr><td>Name</td><td>Required.</td></tr>
+      <tr><td>Personality and speech style</td><td>The basis of the character's personality. How to write it: <a href="#en-av-persona">chapter 8</a>.</td></tr>
+      <tr><td>First greeting</td><td>Optional. Shown first when the character is selected.</td></tr>
+      <tr><td>Avatar motion style</td><td>"Creature / deformed" or "Human" (<a href="#en-av-motion">the difference</a>).</td></tr>
+      <tr><td>Expression images</td><td><b>Neutral is required</b>; the others are optional. Missing expressions are shown using neutral instead.</td></tr>
+    </table></div>
+  </li>
+  <li>Press <code>Add</code> and the character appears in the list.</li>
+</ol>
+<p>Added characters are saved in <code>user-data\characters</code>. To delete one, select it and press <code>Delete character</code>.</p>
+<div class="box tip"><b class="t">Try with just neutral first</b>It is a good idea to add the character with a single neutral image first, check how it moves, then add the other expressions. The screen can only create new characters; to replace images later, recreate the character or <a href="#en-av-file">replace the files directly</a>.</div>
+
+<h2 id="en-avatar">8. Making an avatar</h2>
+<p>The avatar is simply swapping between "one image per expression". <b>Whether you draw by hand or use an image-generation AI, the steps are the same</b>.</p>
+
+<h3 id="en-av-spec">Image specs</h3>
+<div class="tablewrap"><table>
+  <tr><th>Item</th><th>Details</th></tr>
+  <tr><td>Format</td><td>PNG, JPEG, WebP, etc. (when adding from the screen). SVG cannot be added from the screen (only when you <a href="#en-av-file">place files directly</a>).</td></tr>
+  <tr><td>Background</td><td><b>Transparent</b> (no background) is recommended. Images with a background also work, but a rectangular frame will be visible.</td></tr>
+  <tr><td>Size</td><td>Automatically converted to WebP with the <b>long side within 768 px</b> (only reduced; small images are not enlarged). It is displayed about 300 px tall, so 512–768 px square is plenty.</td></tr>
+  <tr><td>Number</td><td>Neutral (required) + up to 7 more (8 expressions in total).</td></tr>
+  <tr><td>Framing</td><td>Full body or upper body both work. Since it is displayed small, make sure <b>the face is clearly visible</b>.</td></tr>
+</table></div>
+
+<h3 id="en-av-emo">The 8 expressions</h3>
+<p>The LLM reads the descriptions below and chooses "which expression fits this reply".</p>
+<div class="tablewrap"><table>
+  <tr><th>Name</th><th>Meaning</th><th>When it is used</th></tr>
+  <tr><td><code>neutral</code></td><td>Neutral (required)</td><td>Calm conversation. The everyday face.</td></tr>
+  <tr><td><code>happy</code></td><td>Happy</td><td>Glad, having fun, being praised.</td></tr>
+  <tr><td><code>sad</code></td><td>Sad</td><td>Sad, disappointed, down.</td></tr>
+  <tr><td><code>angry</code></td><td>Angry</td><td>Anger, dissatisfaction, pouting.</td></tr>
+  <tr><td><code>surprised</code></td><td>Surprised</td><td>Surprise, something unexpected.</td></tr>
+  <tr><td><code>embarrassed</code></td><td>Embarrassed</td><td>Shy, bashful.</td></tr>
+  <tr><td><code>thinking</code></td><td>Thinking</td><td>Deep in thought, hesitating. Also shown while waiting for a reply.</td></tr>
+  <tr><td><code>sleepy</code></td><td>Sleepy</td><td>Sleepy, relaxed, bored.</td></tr>
+</table></div>
+<p>It works without a full set, but having <b>neutral, happy and sad</b> makes a big difference to the impression.</p>
+
+<h3 id="en-av-make">Tips for making them</h3>
+<ul>
+  <li><b>Looking like the same person</b> matters most. If the face, hairstyle or clothes change between expressions, they look like different people.</li>
+  <li><b>With an image-generation AI</b>
+    <ul>
+      <li>First settle on one neutral image.</li>
+      <li>For the other expressions, keep the <b>same seed and same prompt</b> and swap only the words about the expression (smiling, crying, angry face, etc.).</li>
+      <li>For even more stability, use neutral as the source image and do image-to-image with a weak change (a setting that keeps the source strongly).</li>
+      <li>Each time, check that the face, hair, clothes, ribbons and other small items have not changed, and regenerate any image where something odd appears.</li>
+    </ul>
+  </li>
+  <li><b>If you draw</b> … Draw neutral first, then redraw only the eyes, eyebrows and mouth; that is easiest. Use the same canvas size for all expressions.</li>
+  <li><b>Transparent background</b> … Generate/draw so the background is a single color, then make a transparent PNG with a cut-out tool (such as "remove background" in image editors).</li>
+  <li><b>Match the canvas and the feet</b> … If the character's size or position differs between expressions, the avatar seems to jump when switching. Use <b>the same canvas size and the same position for all expressions</b>. The avatar moves around its feet, so <b>aligning the feet (bottom edge)</b> is important.</li>
+  <li><b>Mind the rights</b> … Follow the rules for art drawn by others and for models or materials that have terms of use. Check especially when you publish or distribute.</li>
+</ul>
+
+<h3 id="en-av-motion">Choosing a motion style</h3>
+<div class="tablewrap"><table>
+  <tr><th>Type</th><th>Motion</th><th>Good for</th></tr>
+  <tr><td>Creature / deformed (<code>squash</code>)</td><td>Squashes and stretches, and bounces. Jumps when happy.</td><td>Mascots, animals, mysterious creatures.</td></tr>
+  <tr><td>Human (<code>soft</code>)</td><td>No distortion of the body; only up/down movement and a very slight tilt.</td><td>Human characters.</td></tr>
+</table></div>
+<p>If you set a human drawing to "creature", the body gets warped and looks unnatural. Use "Human". If the motion gets in the way, you can turn it off with <code>Avatar motion</code> in Settings.</p>
+
+<h3 id="en-av-persona">Writing the personality</h3>
+<p>"Personality and speech style" is passed to the LLM as it is. The <b>shorter and more concrete</b> it is, the more stable even a small model becomes. The built-in characters (<code>character.json</code> in the <code>characters</code> folder) are good examples.</p>
+<ul>
+  <li><b>Basics</b> … Age, how it refers to itself, feelings toward you.</li>
+  <li><b>Way of speaking</b> … Verbal tics and sentence endings, plus <b>3–4 example lines</b>. Examples work best.</li>
+  <li><b>Behavior</b> (bullet points) … e.g. "Replies are 1–3 sentences", "Answer what is asked; do not repeat the same words", "If it doesn't know, honestly say so".</li>
+  <li><b>Expression triggers</b> … e.g. writing "gets embarrassed when sincerely praised" makes <code>embarrassed</code> appear more often.</li>
+</ul>
+<pre><code>Example: A laid-back, mysterious creature. Calls itself "I". Ends sentences with "-mochi".
+[Speech] Slow and gentle. e.g. "Good morning, mochi" "That's lovely, mochi"
+[Behavior]
+- Replies are 1-3 sentences.
+- Answer what is asked. Do not repeat the same words.
+- Gets embarrassed when praised.</code></pre>
+
+<h3 id="en-av-file">Using files (advanced)</h3>
+<p>When the screen is not enough (using SVG images, having more than the 8 expressions, fixing settings, etc.), you can create the folder and files directly.</p>
+<ol>
+  <li>In <code>user-data\characters</code>, create a folder with any name you like (letters and digits). Example: <code>user-data\characters\sakura</code></li>
+  <li>Put the expression images (png / webp / svg, etc.) and a <code>character.json</code> in it.</li>
+  <li>Reload the browser (<kbd>F5</kbd>).</li>
+</ol>
+<pre><code>{
+  "name": "Sakura",
+  "persona": "A laid-back 18-year-old girl. …",
+  "greeting": "Hello. You came, didn't you.",
+  "motion": "soft",
+  "fallback": "neutral",
+  "emotions": {
+    "neutral": { "file": "neutral.webp", "hint": "Normal state. Calm conversation" },
+    "happy":   { "file": "happy.webp",   "hint": "Glad, having fun, praised" },
+    "sad":     { "file": "sad.webp",     "hint": "Sad, disappointed, down" }
+  }
+}</code></pre>
+<ul>
+  <li><code>motion</code> is <code>soft</code> (human) or <code>squash</code> (default).</li>
+  <li><code>fallback</code> is the expression used when the matching one is missing (normally <code>neutral</code>).</li>
+  <li><code>hint</code> describes "when to use this expression", and the LLM reads it to choose. Rewriting it changes how expressions appear for that character only. If omitted, the standard description is used.</li>
+  <li>You can have expression names other than the 8 (e.g. <code>shy</code>). In that case always write a <code>hint</code>.</li>
+  <li>It is safest to back up <code>user-data</code> before editing (chapter 10). A mistake with a <code>,</code> or <code>"</code> in the JSON makes that character disappear from the list.</li>
+</ul>
+
+<h2 id="en-lang">9. Switching language</h2>
+<p>Use the language menu at the bottom left to choose 日本語, English, 简体中文, Español or Português. Switching changes the following.</p>
+<ul>
+  <li>The text on the screen and messages such as errors.</li>
+  <li>The names, personalities and greetings of the built-in characters (Mochi, Honoka, Rei).</li>
+  <li><b>The language of the character's replies</b> (the character is instructed to reply in that language).</li>
+</ul>
+<p>The name, settings and greeting of a character you added stay in the language you wrote them in.</p>
+<div class="box warn"><b class="t">Notes</b>
+  <ul>
+    <li>The English, Chinese, Spanish and Portuguese screens and the built-in character translations are machine-translated and have not been checked by native speakers. Some phrasing may sound unnatural.</li>
+    <li>Different models are good at different languages. Small models such as Stheno are most stable in English. Japanese is on the weak side.</li>
+    <li>Switching language does not change the language of existing chat logs.</li>
+    <li>This manual is available in Japanese, English, Chinese, Spanish and Portuguese (see the tabs at the top); the translations are also machine-made.</li>
+  </ul>
+</div>
+
+<h2 id="en-data">10. Data, backup and updating</h2>
+<div class="tablewrap"><table>
+  <tr><th>Folder / file</th><th>Contents</th><th>If you delete it</th></tr>
+  <tr><td><code>user-data\</code></td><td>Settings (<code>config.json</code>), chats and memories (<code>app.db</code>), added characters</td><td><b>Everything is lost.</b> Backing up just this lets you move to another PC.</td></tr>
+  <tr><td><code>system\</code></td><td>The Python set installed automatically</td><td>Rebuilt (downloaded again) at the next start.</td></tr>
+  <tr><td><code>llama.cpp\</code> <code>llama-swap\</code></td><td>Local LLM executables</td><td>Reinstall with <code>misc\setup-llm.bat</code>.</td></tr>
+  <tr><td><code>models\</code></td><td>LLM model files (about 4.9 GB each)</td><td>Download again.</td></tr>
+  <tr><td><code>misc\downloads\</code></td><td>Where downloaded zips are kept</td><td>Safe to delete (frees disk space).</td></tr>
+</table></div>
+<h3>Backup</h3>
+<p>Close the app, then copy the whole <code>user-data</code> folder. To restore, copy it back over the same place.</p>
+<h3>Updating</h3>
+<ol>
+  <li>Extract the new zip.</li>
+  <li>Copy the <code>app</code>, <code>characters</code> and <code>misc</code> folders plus <code>start.bat</code> and the <code>manual.html</code> files over your current folder (<b>overwrite</b>).</li>
+  <li>Start it with <code>start.bat</code>.</li>
+</ol>
+<p><code>user-data</code>, <code>system</code>, <code>models</code>, etc. are not in the zip, so <b>they are not erased by overwriting</b>.</p>
+
+<h2 id="en-trouble">11. Troubleshooting</h2>
+<div class="tablewrap"><table>
+  <tr><th>Symptom</th><th>What to check</th></tr>
+  <tr><td>A message about setting the model name in Settings</td><td>The <code>Model name</code> in Settings is empty. Choose one with "Get list" and save.</td></tr>
+  <tr><td>No reply / errors such as "Cannot connect"</td><td>Is the LLM server running? If you used the setup, check that a small llama-swap window is on the taskbar. If not, run <code>start.bat</code> again. For LM Studio or Ollama, start them first. Also check that the <code>Server URL</code> is correct.</td></tr>
+  <tr><td>The first reply is very slow</td><td>The first time, the model is loaded into the GPU, which takes tens of seconds. It is faster from the second time.</td></tr>
+  <tr><td>Always slow / stops midway</td><td>The GPU may be running out of memory. Try closing other apps (games, image generation, etc.), reducing <code>History turns</code> in Settings, or changing <code>-c 8192</code> to <code>-c 4096</code> in <code>llama-swap\config.yaml</code>.</td></tr>
+  <tr><td>Reply format breaks, or it repeats itself</td><td>Lower <code>Temperature</code> to 0.5–0.7. If that doesn't help, try another model. The app also re-reads and retries broken replies.</td></tr>
+  <tr><td>The expression doesn't change</td><td>The character may have only one image (neutral). <a href="#en-av-emo">Add more expressions</a>.</td></tr>
+  <tr><td>Memories don't increase</td><td>They are organized every few exchanges. Make <code>Memory interval</code> smaller, or use <code>Clear chat</code> to organize everything so far.</td></tr>
+  <tr><td>The browser doesn't open</td><td>Open <code>http://127.0.0.1:8765</code> manually. If the port is in use, the next number (8766…) is used automatically; look at the address shown in the black window.</td></tr>
+  <tr><td>Search doesn't work</td><td>No Brave key is set, or the menu next to the input box is "Off". See chapter 6.</td></tr>
+  <tr><td>The setup download failed</td><td>Check your internet connection and open <code>start.bat</code> (or <code>misc\setup-llm.bat</code>) again. It resumes where it stopped.</td></tr>
+  <tr><td>A character disappeared from the list</td><td>There may be a format mistake in <code>character.json</code>. Compare it with the example in <a href="#en-av-file">Using files in chapter 8</a>.</td></tr>
+</table></div>
+
+<h2 id="en-tools">12. Appendix: tools for creators (advanced)</h2>
+<p>Command-line scripts used for making avatar images and distribution packages. <b>If you just use the app normally, you do not need to read this chapter.</b> All of them are in the <code>misc</code> folder.</p>
+<div class="box warn"><b class="t">Prerequisites</b>Run the commands in Command Prompt or PowerShell opened in the same folder as <code>start.bat</code>. They use the Python installed by <code>start.bat</code> (<code>system\python\python.exe</code>). <code>%py%</code> in the examples below is a shorthand for it.<br>
+  <code>set py=system\python\python.exe</code> (Command Prompt) / <code>$py = "system\python\python.exe"</code> (PowerShell)</div>
+
+<div class="tablewrap"><table>
+  <tr><th>Script</th><th>What it does</th><th>How to run</th></tr>
+  <tr><td><code>gen_images.py</code></td><td>Makes ComfyUI generate the standing images for each expression automatically</td><td><code>%py% misc\gen_images.py spec.json</code></td></tr>
+  <tr><td><code>make_sprites.py</code></td><td>Makes the white background of generated PNGs transparent and converts them to WebP (within 768 px)</td><td><code>%py% misc\make_sprites.py PNG_folder output_folder</code></td></tr>
+  <tr><td><code>make_zip.py</code></td><td>Builds the distribution zip (<code>user-data</code>, <code>models</code>, etc. are not included)</td><td><code>%py% misc\make_zip.py</code></td></tr>
+  <tr><td><code>smoke_test.py</code></td><td>Runs the app against a dummy LLM and checks that everything works</td><td><code>%py% misc\smoke_test.py</code></td></tr>
+</table></div>
+
+<h3 id="en-tool-gen">Generating the expression images automatically (gen_images.py → make_sprites.py)</h3>
+<p>This is the flow for making all 8 expressions of one character at once. <b>ComfyUI must be running and have a model installed.</b></p>
+<ol>
+  <li>Create a spec file (JSON). Copy the example below and edit it.</li>
+  <li>Tell the script ComfyUI's address with the environment variable <code>COMFY_HOST</code> (if unset, <code>http://127.0.0.1:8188</code>).<br>
+    <code>set COMFY_HOST=http://127.0.0.1:8188</code></li>
+  <li>Run <code>%py% misc\gen_images.py spec.json</code>. It makes one image per expression and saves it in <code>outdir</code> as <code>expressionname.png</code>. To redo only certain expressions, add them comma-separated at the end (e.g. <code>spec.json sad,happy</code>).</li>
+  <li>Use <code>%py% misc\make_sprites.py PNG_folder output_folder</code> to make WebP files with a transparent background. This conversion removes information embedded in the PNG, such as the prompt.</li>
+  <li>Register the resulting WebP files from the <a href="#en-addchar">Add character</a> screen.</li>
+</ol>
+<pre><code>{
+  "outdir": "misc/gen/mychar",
+  "prefix": "avt_mychar",
+  "checkpoint": "model_file_name.safetensors",
+  "width": 832, "height": 1216, "steps": 28, "cfg": 5.5, "seed": 12345,
+  "base": "1girl, solo, long hair, white blouse, upper body, simple background, white background",
+  "negative": "worst quality, low quality, bad anatomy, text, watermark",
+  "variants": {
+    "neutral": "closed mouth, light smile",
+    "happy": "bright smile, open mouth",
+    "sad": "sad, teary eyes",
+    "angry": "angry, furrowed brow",
+    "surprised": "surprised, wide eyes, open mouth",
+    "embarrassed": "embarrassed, blush, looking away",
+    "thinking": "thinking, hand on own chin, looking up",
+    "sleepy": "sleepy, half-closed eyes"
+  }
+}</code></pre>
+<ul>
+  <li><code>base</code> is the look shared by all expressions, and <code>variants</code> are the words added per expression. <b>Not changing seed and base</b> keeps the face consistent (<a href="#en-av-make">Tips for making them</a>).</li>
+  <li>To change only the expression from one reference image, add <code>"init_image": "reference.png"</code> and <code>"denoise": 0.6</code> (the smaller the denoise, the closer to the original). To vary it per expression, use <code>"variant_denoise": {"sad": 0.7}</code>.</li>
+  <li>The transparency step assumes a <b>plain white background</b>. Put <code>white background</code> in <code>base</code>.</li>
+  <li>Each image takes tens of seconds. If one is not finished after 5 minutes, that expression results in an error.</li>
+  <li>The ComfyUI workflow is built automatically as a basic single-model setup (checkpoint → KSampler → save). LoRA and ControlNet cannot be used.</li>
+</ul>
+
+<h3 id="en-tool-zip">Building the distribution zip (make_zip.py)</h3>
+<p>Builds a zip of the project folder without <code>user-data</code> (chats and settings), <code>system</code>, <code>downloads</code>, <code>llama.cpp</code>, <code>llama-swap</code>, <code>models</code> and the working folder <code>gen</code>. The output goes to <code>avatar-chat-dist\avatar-chat.zip</code>, one level above the project. To put it elsewhere, add the destination at the end (e.g. <code>%py% misc\make_zip.py C:\temp\a.zip</code>).</p>
+
+<h3 id="en-tool-test">Checking that it works (smoke_test.py)</h3>
+<p>Copies the project to a temporary folder, starts the app with a dummy LLM, and tries the APIs the screen uses. If <code>RESULT: ALL PASSED</code> is shown at the end, it succeeded. It does not touch your <code>user-data</code>. Use it to check after fixing the code.</p>
+<div class="box tip"><b class="t">Note</b>These scripts were made and run in the author's environment (Linux). Not all of them have actually been tried with the Windows <code>system\python</code>. If something does not work, use the error message as a clue to investigate.</div>
+
+<footer>Avatar Chat Manual</footer>
+</main>
+</div>
+<div class="wrap" lang="zh-CN" data-lang="zh" hidden>
+<nav>
+  <b>目录</b>
+  <a href="#zh-intro">1. Avatar Chat 是什么</a>
+  <a href="#zh-start">2. 启动与退出</a>
+  <a href="#zh-screen">3. 界面说明</a>
+  <a href="#zh-settings">4. 设置</a>
+  <a href="#zh-memory">5. 记忆的原理</a>
+  <a href="#zh-web">6. 联网搜索与天气</a>
+  <a href="#zh-addchar">7. 添加角色</a>
+  <a href="#zh-avatar">8. 制作头像</a>
+  <a class="sub" href="#zh-av-spec">图片规格</a>
+  <a class="sub" href="#zh-av-emo">8 种表情</a>
+  <a class="sub" href="#zh-av-make">制作要点</a>
+  <a class="sub" href="#zh-av-motion">如何选择动作方式</a>
+  <a class="sub" href="#zh-av-persona">性格设定的写法</a>
+  <a class="sub" href="#zh-av-file">用文件制作(进阶)</a>
+  <a href="#zh-lang">9. 切换语言</a>
+  <a href="#zh-data">10. 数据、备份与更新</a>
+  <a href="#zh-trouble">11. 遇到问题时</a>
+  <a href="#zh-tools">12. 附录:面向创作者的工具</a>
+</nav>
+
+<main>
+<h1>Avatar Chat 使用手册</h1>
+<p class="lead">这是一款与兼容 OpenAI 的 LLM 聊天的应用,头像的表情会随着回复内容而变化。本手册与 <code>start.bat</code> 位于同一文件夹中。</p>
+
+<h2 id="zh-intro">1. Avatar Chat 是什么</h2>
+<ul>
+  <li><b>表情会变化</b> … 每次回复时,LLM 会选择一种心情(开心、难过……),头像随之切换为对应表情的图片。</li>
+  <li><b>每个角色各有记忆</b> … 会自动记下对话中值得记住的内容,并随时间逐渐淡忘。角色之间不共享记忆。</li>
+  <li><b>可以增加角色</b> … 可以用喜欢的图片添加自己的角色(第 7、8 章)。</li>
+  <li><b>联网搜索・天气</b> … 仅在需要时查询并作答(第 6 章。需要 Brave 搜索的 API 密钥)。</li>
+  <li><b>5 种语言的界面</b> … 日本語・English・简体中文・Español・Português。</li>
+  <li><b>只在自己的电脑上运行</b> … 对话和记忆保存在自己的电脑中(<code>user-data</code>)。会传到外部的只有发送给 LLM 的内容(如果是自己的服务器则不会外传),以及使用联网搜索时的搜索词。</li>
+</ul>
+
+<h2 id="zh-start">2. 启动与退出</h2>
+<h3>首次启动</h3>
+<ol>
+  <li>双击 <code>start.bat</code>。会打开一个黑色窗口,仅在第一次自动下载 Python 等组件(需要联网,需要几分钟)。</li>
+  <li>接着会出现“Local LLM setup(本地 LLM 设置)”菜单。<b>只需按数字键</b>即可选择。
+    <div class="tablewrap"><table>
+      <tr><th>选项</th><th>适用情况</th></tr>
+      <tr><td>1 Radeon</td><td>AMD 显卡。安装 Vulkan 版 llama.cpp。Intel 显卡和集成显卡也许也能运行(尚未验证。集成显卡与系统共享内存,可能会变慢或无法运行)。</td></tr>
+      <tr><td>2 GeForce RTX 20 series or later</td><td>NVIDIA 显卡(显存 8GB 以上)。安装 CUDA 版。</td></tr>
+      <tr><td>3 I already have an LLM server</td><td>已经在使用 LM Studio、Ollama、llama.cpp 等的用户。只登记连接地址(不安装服务器本身)。</td></tr>
+      <tr><td>4 Skip</td><td>现在什么都不做。以后在“设置”界面自己填写。</td></tr>
+    </table></div>
+    菜单上方会显示您所用显卡的名称。拿不准时请参考它来选择。
+  </li>
+  <li>选择 1 或 2 后,会自动下载 llama.cpp、llama-swap 和模型(Stheno v3.4 8B,约 4.9GB)。为了不给服务器增加负担,模型会<b>故意放慢速度下载(约 17 分钟)</b>。<b>请不要关闭黑色窗口</b>。即使关闭了,下次再打开 <code>start.bat</code> 也会从中断处继续。<br>
+    还会询问是否安装第二个模型(Lumimaid v0.2 8B)。拿不准的话选“1 No”即可。<br>
+    <b>注意:</b>Stheno 和 Lumimaid 都已经是有些过时的模型,<b>日语较弱</b>(措辞可能不自然,句子可能出错)。这是在 8GB 显存可运行范围内的取舍。如果想提高日语质量,请在 <code>llama-swap\config.yaml</code> 中换成更大的模型或其他模型(显存不足则无法运行)。</li>
+  <li>完成后浏览器会自动打开并显示聊天界面。如果没有打开,请在浏览器中访问 <code>http://127.0.0.1:8765</code>。</li>
+</ol>
+<div class="box tip"><b class="t">从第二次起</b>不会再出现菜单。只需双击 <code>start.bat</code>(LLM 服务器也会一同启动)。</div>
+
+<h3>退出</h3>
+<ul>
+  <li>关闭应用的黑色窗口(<code>start.bat</code> 的窗口)。</li>
+  <li>通过设置安装的 LLM 服务器(llama-swap)在<b>另一个小窗口(最小化到任务栏)</b>中运行。用完后也请关闭它(关闭后会释放 GPU 显存)。</li>
+  <li>即使在对话中途突然关闭,此前的对话也已保存,尚未整理成记忆的部分会在下次启动时整理。</li>
+</ul>
+
+<h3>重新进行设置</h3>
+<p>双击 <code>misc</code> 文件夹中的 <code>setup-llm.bat</code>(会出现同样的菜单)。已下载的文件会被重复使用。</p>
+
+<h2 id="zh-screen">3. 界面说明</h2>
+<div class="ph">
+  <div><b>左侧:角色列表</b>选择角色 / <code>＋ 添加角色</code> / 切换语言 / <code>⚙ 设置</code></div>
+  <div><b>中间:对话</b>上方是头像和名字,下方是对话记录和输入框。输入框旁边可以选择搜索模式。</div>
+  <div><b>右侧:记忆</b>该角色记住的内容。进度条越短,说明越接近被遗忘。</div>
+</div>
+<h3>开始对话</h3>
+<ul>
+  <li>在下方输入框中输入,点击<b>发送</b>按钮(或按 <kbd>Enter</kbd>)发送。换行用 <kbd>Shift</kbd>+<kbd>Enter</kbd>。</li>
+  <li>收到回复后头像的表情会变化,过一会儿会恢复为原来的表情(平静)。</li>
+  <li>回复较慢时会显示“…”。第一次加载模型时尤其耗时。</li>
+  <li>当角色想起某段记忆来回答时,消息下方会淡淡地显示“想起的事”。</li>
+</ul>
+<h3>按钮</h3>
+<div class="tablewrap"><table>
+  <tr><th>按钮</th><th>作用</th></tr>
+  <tr><td>清除对话</td><td>删除与该角色的对话记录。删除前会先把尚未记住的内容整理成记忆,所以<b>记忆会保留</b>。</td></tr>
+  <tr><td>删除角色</td><td>只会出现在自己添加的角色上。对话和记忆会全部删除,<b>无法恢复</b>。内置角色(Mochi、Honoka、Rei)不能删除。</td></tr>
+  <tr><td>右侧记忆上的“×”</td><td>删除这一条记忆。记错了的时候使用。</td></tr>
+</table></div>
+
+<h2 id="zh-settings">4. 设置</h2>
+<p>点击左下角的 <code>⚙ 设置</code> 按钮打开。修改后请点击 <code>保存</code>。</p>
+<div class="tablewrap"><table>
+  <tr><th>项目</th><th>含义</th></tr>
+  <tr><td>服务器地址</td><td>LLM 服务器的地址。若使用了安装向导,则为 <code>http://127.0.0.1:8080/v1</code>。LM Studio 为 <code>http://127.0.0.1:1234/v1</code>,Ollama 为 <code>http://127.0.0.1:11434/v1</code>。</td></tr>
+  <tr><td>API 密钥</td><td>本机上的服务器可以留空。只有使用外部服务时才需要填写。保存后会显示“已设置”。</td></tr>
+  <tr><td>模型名称</td><td>要使用的模型。点击右侧的“获取列表”,服务器上的模型会作为候选显示。点击输入框可显示全部候选,输入文字可进行筛选。若已完成安装向导,则为 <code>stheno-8b</code>(安装了第二个模型时还有 <code>lumimaid-8b</code>)。</td></tr>
+  <tr><td>角色对你的称呼</td><td>角色称呼你的名字。</td></tr>
+  <tr><td>联网搜索用 Brave Search API 密钥</td><td>仅在使用联网搜索时填写。参见第 6 章。</td></tr>
+  <tr><td>搜索的国家代码 / 搜索结果数量</td><td>搜索结果所属的国家(如 <code>CN</code>)和获取的条数(1~10)。</td></tr>
+  <tr><td>头像动作</td><td>从“始终开启 / 遵循系统的‘减少动画’设置 / 关闭”中选择头像的待机动作(仅在此界面生效)。觉得动作碍眼时选“关闭”。</td></tr>
+  <tr><td>温度</td><td>回复的随机程度。数值越大越自由,越小越稳健(默认 0.8)。回复变得混乱时,降到 0.5~0.7 会更稳定。</td></tr>
+  <tr><td>历史往返数</td><td>每次传给 LLM 的最近对话量(默认 12 个往返)。增加后更容易记住上下文,但会变慢。</td></tr>
+  <tr><td>整理记忆的间隔</td><td>你每发言几次就整理一次记忆(默认 2)。越小记得越快,但调用 LLM 的次数会增加。</td></tr>
+  <tr><td>记忆基准天数</td><td>越大越不容易忘(默认 10 天)。参见第 5 章。</td></tr>
+</table></div>
+<div class="box warn"><b class="t">API 密钥的保存</b>密钥以<b>明文</b>保存在 <code>user-data\config.json</code> 中。请不要把这个文件夹交给他人,也不要公开到网上。</div>
+
+<h2 id="zh-memory">5. 记忆的原理</h2>
+<ul>
+  <li>每聊几次,LLM 就会提取“值得记住的内容”(名字、喜好、约定等)并记成笔记。</li>
+  <li>每条笔记都有<b>重要度</b>(1~5)。越重要,保留得越久。</li>
+  <li>随着时间推移,<b>强度</b>(进度条长度)会下降。但每当在话题中被想起,就会<b>变强,更不容易被忘记</b>。</li>
+  <li>强度变得太小的记忆将不会再被想起。</li>
+  <li>记忆是<b>按角色</b>区分的。你对 Mochi 说过的话,Honoka 并不知道。</li>
+  <li>关闭标签页、点击“清除对话”或下次启动时,尚未整理完的对话也会自动整理成记忆。</li>
+</ul>
+<p>记错的内容可以用右侧记忆上的“×”删除。</p>
+
+<h2 id="zh-web">6. 联网搜索与天气</h2>
+<p>被问到最新话题或不知道的事情时,可以上网搜索并用于回答。</p>
+<ol>
+  <li>在 <a href="https://brave.com/search/api/">Brave Search API</a>(外部网站)获取 API 密钥。</li>
+  <li>粘贴到 <code>⚙ 设置</code> → <code>Brave Search API 密钥</code> 中并保存。</li>
+  <li>在输入框旁边的菜单中选择模式。
+    <ul>
+      <li><b>🔍 自动</b> … 仅在角色判断有必要时才搜索(默认)。</li>
+      <li><b>🔍 每次</b> … 每次都搜索。</li>
+      <li><b>🔍 关闭</b> … 不搜索。</li>
+    </ul>
+  </li>
+</ol>
+<ul>
+  <li>未设置密钥时,菜单会显示“🔍 未设置密钥”。点击后会打开设置界面。</li>
+  <li>进行了搜索时,消息下方会显示“搜索了的词”和来源链接。</li>
+  <li>带有日本地名的<b>天气提问</b>(例如“明天福冈的天气?”)不是靠搜索,而是用<b>日本气象厅的官方数据</b>回答(用英语等其他语言提问也可以)。在搜索模式不是“关闭”时生效。按照目前界面的设计,<b>如果没有设置 Brave Search API 密钥,就无法使用搜索模式,天气功能也不会生效</b>(获取天气本身不需要密钥费用)。</li>
+</ul>
+<div class="box warn"><b class="t">隐私</b>使用搜索时,搜索词会发送给 Brave。不会发送对话的全文。</div>
+
+<h2 id="zh-addchar">7. 添加角色</h2>
+<ol>
+  <li>点击左侧的 <code>＋ 添加角色</code>。</li>
+  <li>填写以下内容。
+    <div class="tablewrap"><table>
+      <tr><th>项目</th><th>填写内容</th></tr>
+      <tr><td>名字</td><td>必填。</td></tr>
+      <tr><td>性格与说话方式</td><td>角色性格的基础。写法见<a href="#zh-av-persona">第 8 章</a>。</td></tr>
+      <tr><td>第一句问候</td><td>可选。选择角色时最先显示。</td></tr>
+      <tr><td>头像的动作方式</td><td>“生物 / Q版”或“人形”(<a href="#zh-av-motion">区别</a>)。</td></tr>
+      <tr><td>表情图片</td><td><b>neutral(平静)必填</b>,其他可选。缺少的表情会用 neutral 代替显示。</td></tr>
+    </table></div>
+  </li>
+  <li>点击 <code>添加</code>,角色就会出现在列表中。</li>
+</ol>
+<p>添加的角色保存在 <code>user-data\characters</code> 中。删除时选中该角色,点击 <code>删除角色</code> 即可。</p>
+<div class="box tip"><b class="t">先只用 neutral 试试</b>建议一开始只用 neutral 一张图片添加,确认动作效果后再补充其他表情。界面上只能新建,若之后想替换图片,需要重新创建角色,或<a href="#zh-av-file">直接替换文件</a>。</div>
+
+<h2 id="zh-avatar">8. 制作头像</h2>
+<p>头像其实只是切换“每种表情一张图片”。<b>无论是手绘的人还是使用图像生成 AI 的人,步骤都相同</b>,都能制作自己的角色。</p>
+
+<h3 id="zh-av-spec">图片规格</h3>
+<div class="tablewrap"><table>
+  <tr><th>项目</th><th>内容</th></tr>
+  <tr><td>格式</td><td>PNG、JPEG、WebP 等(从界面添加时)。SVG 无法从界面添加(只能<a href="#zh-av-file">用文件放置</a>)。</td></tr>
+  <tr><td>背景</td><td>推荐<b>透明</b>(无背景)。带背景的图片也能用,但会看到方形边框。</td></tr>
+  <tr><td>大小</td><td>会自动转换为<b>长边不超过 768px</b> 的 WebP(只缩小,小图不会被放大)。显示高度约 300px,所以 512~768px 见方就足够了。</td></tr>
+  <tr><td>数量</td><td>neutral 必填 + 最多 7 张(共 8 种表情)。</td></tr>
+  <tr><td>朝向・构图</td><td>全身或半身均可。但因为显示得较小,请使用<b>脸部清晰可见</b>的构图。</td></tr>
+</table></div>
+
+<h3 id="zh-av-emo">8 种表情</h3>
+<p>LLM 会根据下面的说明,选择“哪种表情适合当前的回复”。</p>
+<div class="tablewrap"><table>
+  <tr><th>名称</th><th>中文</th><th>使用场合</th></tr>
+  <tr><td><code>neutral</code></td><td>平静(必填)</td><td>平静的对话。平时的表情。</td></tr>
+  <tr><td><code>happy</code></td><td>开心</td><td>高兴、愉快、被夸奖。</td></tr>
+  <tr><td><code>sad</code></td><td>难过</td><td>悲伤、遗憾、沮丧。</td></tr>
+  <tr><td><code>angry</code></td><td>生气</td><td>愤怒、不满、气鼓鼓。</td></tr>
+  <tr><td><code>surprised</code></td><td>惊讶</td><td>惊讶、意料之外的事。</td></tr>
+  <tr><td><code>embarrassed</code></td><td>害羞</td><td>害羞、不好意思。</td></tr>
+  <tr><td><code>thinking</code></td><td>思考</td><td>陷入沉思、犹豫。等待回复期间也会显示。</td></tr>
+  <tr><td><code>sleepy</code></td><td>困倦</td><td>困了、悠闲、无聊。</td></tr>
+</table></div>
+<p>不必凑齐也能运行,但有 <b>neutral、happy、sad</b> 这 3 张,印象会大不相同。</p>
+
+<h3 id="zh-av-make">制作要点</h3>
+<ul>
+  <li><b>看起来是同一个人</b>最重要。如果每个表情的五官、发型、服装都不同,就会像是不同的人。</li>
+  <li><b>用图像生成 AI 制作时</b>
+    <ul>
+      <li>先确定一张 neutral。</li>
+      <li>其他表情保持<b>相同的种子(seed)和相同的提示词</b>,只替换与表情相关的词(笑脸、哭脸、生气的脸等)来生成。</li>
+      <li>想要更稳定时,以 neutral 为原图,用较弱的变化幅度(强烈保留原图的设置)进行图生图。</li>
+      <li>每次生成后,请检查脸、头发、服装、缎带等小物件是否有变化,如果出现奇怪的东西,就重新生成。</li>
+    </ul>
+  </li>
+  <li><b>手绘时</b> … 先画好 neutral,然后只重画眼睛、眉毛和嘴巴会比较轻松。所有表情使用相同的画布尺寸。</li>
+  <li><b>背景透明</b> … 生成/绘制时让背景为单一颜色,再用抠图工具(图像编辑软件的“删除背景”等)做成透明 PNG。</li>
+  <li><b>统一画布和脚下位置</b> … 如果各表情中角色的大小或位置有偏差,切换时头像看起来会跳动。请让<b>所有表情使用相同大小的画布、相同的位置</b>。头像以脚下为支点运动,所以<b>对齐脚下(下边缘)</b>很重要。</li>
+  <li><b>注意版权</b> … 他人绘制的图画,以及有使用条件的模型・素材,请遵守其规则。公开・分发时尤其要确认。</li>
+</ul>
+
+<h3 id="zh-av-motion">如何选择动作方式</h3>
+<div class="tablewrap"><table>
+  <tr><th>类型</th><th>动作</th><th>适合的角色</th></tr>
+  <tr><td>生物 / Q版(<code>squash</code>)</td><td>会被压扁、拉长,有弹性地跳动。高兴时会蹦起来。</td><td>吉祥物・动物・神秘生物。</td></tr>
+  <tr><td>人形(<code>soft</code>)</td><td>身体不变形,只有上下移动和非常轻微的倾斜。</td><td>人类角色。</td></tr>
+</table></div>
+<p>如果把人物画选成“生物”,身体会被扭曲,看起来不自然。请选“人形”。动作碍事时,可以在设置的 <code>头像动作</code> 中关闭。</p>
+
+<h3 id="zh-av-persona">性格设定的写法</h3>
+<p>“性格与说话方式”会原样传给 LLM。写得<b>越简短具体</b>,即使是小模型也越稳定。内置角色(<code>characters</code> 文件夹中的 <code>character.json</code>)可以作为范例。</p>
+<ul>
+  <li><b>基本信息</b> … 年龄、自称、对你(对方)的感情。</li>
+  <li><b>说话方式</b> … 口头禅和句尾,以及 <b>3~4 个例句</b>。例句最有效。</li>
+  <li><b>行为准则</b>(条目式) … 例如:“回复 1~3 句”“回答被问到的问题,不要重复同样的话”“不知道的事就老实说‘不知道’”。</li>
+  <li><b>表情的触发点</b> … 例如写上“被真心夸奖会害羞”,就更容易出现 embarrassed。</li>
+</ul>
+<pre><code>示例:悠闲的神秘生物。自称“我”。句尾加“~mochi”。
+【说话方式】慢悠悠、温柔。例:“早上好 mochi”“那真棒 mochi”
+【行为准则】
+- 回复 1~3 句。
+- 回答被问到的问题。不要重复同样的话。
+- 被夸奖会害羞。</code></pre>
+
+<h3 id="zh-av-file">用文件制作(进阶)</h3>
+<p>界面无法满足需求时(使用 SVG 图片、增加 8 种以外的表情、修改设置等),可以直接创建文件夹和文件。</p>
+<ol>
+  <li>在 <code>user-data\characters</code> 中创建一个任意名称(英文字母和数字)的文件夹。例如:<code>user-data\characters\sakura</code></li>
+  <li>在其中放入表情图片(png / webp / svg 等)和 <code>character.json</code>。</li>
+  <li>刷新浏览器(<kbd>F5</kbd>)。</li>
+</ol>
+<pre><code>{
+  "name": "樱",
+  "persona": "悠闲的 18 岁女孩。……",
+  "greeting": "你好。你来啦。",
+  "motion": "soft",
+  "fallback": "neutral",
+  "emotions": {
+    "neutral": { "file": "neutral.webp", "hint": "平常的状态。平静的对话" },
+    "happy":   { "file": "happy.webp",   "hint": "高兴、愉快、被夸奖" },
+    "sad":     { "file": "sad.webp",     "hint": "悲伤、遗憾、沮丧" }
+  }
+}</code></pre>
+<ul>
+  <li><code>motion</code> 为 <code>soft</code>(人形)或 <code>squash</code>(默认)。</li>
+  <li><code>fallback</code> 是没有对应表情时使用的表情(通常为 <code>neutral</code>)。</li>
+  <li><code>hint</code> 是“在什么情况下使用这个表情”的说明,LLM 会读取它来选择。改写后,可以只改变该角色的表情出现方式。省略时使用标准说明。</li>
+  <li>表情名也可以增加到 8 个以外(例如 <code>shy</code>)。这种情况下请务必写上 <code>hint</code>。</li>
+  <li>编辑前最好先备份 <code>user-data</code>(第 10 章)。如果 JSON 中的 <code>,</code> 或 <code>"</code> 写错,该角色会从列表中消失。</li>
+</ul>
+
+<h2 id="zh-lang">9. 切换语言</h2>
+<p>通过左下角的语言菜单,可以选择 日本語、English、简体中文、Español、Português。切换后,以下内容会改变。</p>
+<ul>
+  <li>界面文字,以及错误等提示信息。</li>
+  <li>内置角色(Mochi、Honoka、Rei)的名字、性格和问候。</li>
+  <li><b>角色回复的语言</b>(会指示角色用该语言回复)。</li>
+</ul>
+<p>自己添加的角色的名字、设定和问候,仍保持书写时的语言。</p>
+<div class="box warn"><b class="t">注意</b>
+  <ul>
+    <li>英语、中文、西班牙语、葡萄牙语的界面以及内置角色的翻译均为机器翻译,没有经过母语者的确认。可能会有不自然的表达。</li>
+    <li>不同的模型擅长的语言不同。Stheno 等小型模型在英语上最稳定。日语较弱。</li>
+    <li>切换语言不会改变已有对话记录的语言。</li>
+    <li>本手册提供日语、英语、中文、西班牙语、葡萄牙语版本(见顶部的标签),译文同样是机器翻译。</li>
+  </ul>
+</div>
+
+<h2 id="zh-data">10. 数据、备份与更新</h2>
+<div class="tablewrap"><table>
+  <tr><th>文件夹 / 文件</th><th>内容</th><th>删除后</th></tr>
+  <tr><td><code>user-data\</code></td><td>设置(<code>config.json</code>)・对话与记忆(<code>app.db</code>)・添加的角色</td><td><b>全部消失。</b>只要备份它就可以迁移到别的电脑。</td></tr>
+  <tr><td><code>system\</code></td><td>自动安装的 Python 全套组件</td><td>下次启动时重新生成(重新下载)。</td></tr>
+  <tr><td><code>llama.cpp\</code> <code>llama-swap\</code></td><td>本地 LLM 的可执行文件</td><td>用 <code>misc\setup-llm.bat</code> 重新安装。</td></tr>
+  <tr><td><code>models\</code></td><td>LLM 的模型文件(每个约 4.9GB)</td><td>重新下载。</td></tr>
+  <tr><td><code>misc\downloads\</code></td><td>下载的 zip 的存放处</td><td>可以删除(能释放空间)。</td></tr>
+</table></div>
+<h3>备份</h3>
+<p>关闭应用后,把 <code>user-data</code> 文件夹整个复制出来。还原时,覆盖复制回原位置。</p>
+<h3>更新</h3>
+<ol>
+  <li>解压新的 zip。</li>
+  <li>把其中的 <code>app</code>、<code>characters</code>、<code>misc</code> 文件夹以及 <code>start.bat</code>、<code>manual.html</code> <b>覆盖复制</b>到现在的文件夹中。</li>
+  <li>用 <code>start.bat</code> 启动。</li>
+</ol>
+<p><code>user-data</code>、<code>system</code>、<code>models</code> 等不在 zip 中,所以<b>覆盖也不会被删除</b>。</p>
+
+<h2 id="zh-trouble">11. 遇到问题时</h2>
+<div class="tablewrap"><table>
+  <tr><th>症状</th><th>需要确认的事项</th></tr>
+  <tr><td>提示“请在设置中填写模型名称”</td><td>设置中的 <code>模型名称</code> 是空的。请用“获取列表”选择后保存。</td></tr>
+  <tr><td>没有回复 / 出现“无法连接”等错误</td><td>LLM 服务器是否已启动?若使用了安装向导,请确认任务栏中是否有小的 llama-swap 窗口。没有的话请再次运行 <code>start.bat</code>。LM Studio 和 Ollama 需要先启动它们自己。另外请确认 <code>服务器地址</code> 是否正确。</td></tr>
+  <tr><td>第一次回复非常慢</td><td>第一次需要把模型加载到 GPU,要花几十秒。从第二次起会变快。</td></tr>
+  <tr><td>总是很慢 / 中途停住</td><td>可能是 GPU 显存不足。请尝试关闭其他应用(游戏、图像生成等),减少设置中的 <code>历史往返数</code>,或把 <code>llama-swap\config.yaml</code> 中的 <code>-c 8192</code> 改为 <code>-c 4096</code>。</td></tr>
+  <tr><td>回复格式混乱、重复同样的内容</td><td>把 <code>温度</code> 降到 0.5~0.7。仍不行的话,请尝试其他模型。应用本身也会对混乱的回复重新解析并重试。</td></tr>
+  <tr><td>表情不变</td><td>该角色可能只有一张表情图片(只有 neutral)。请<a href="#zh-av-emo">补充表情</a>。</td></tr>
+  <tr><td>记忆没有增加</td><td>每聊几次才会整理一次。把 <code>整理记忆的间隔</code> 调小,或使用 <code>清除对话</code>,此前的内容就会被整理。</td></tr>
+  <tr><td>浏览器没有打开</td><td>请手动打开 <code>http://127.0.0.1:8765</code>。如果端口被占用,会自动改用下一个编号(8766……)。请查看黑色窗口中显示的地址。</td></tr>
+  <tr><td>搜索不工作</td><td>未设置 Brave 密钥,或输入框旁的菜单为“关闭”。参见第 6 章。</td></tr>
+  <tr><td>安装向导的下载失败</td><td>请检查网络连接,再次打开 <code>start.bat</code>(或 <code>misc\setup-llm.bat</code>)。会从中断处继续。</td></tr>
+  <tr><td>角色从列表中消失了</td><td>可能是 <code>character.json</code> 的格式有误。请对照<a href="#zh-av-file">第 8 章“用文件制作”</a>的示例检查。</td></tr>
+</table></div>
+
+<h2 id="zh-tools">12. 附录:面向创作者的工具(进阶)</h2>
+<p>这些是用于制作头像图片和分发包的命令行脚本。<b>如果只是正常使用,不需要阅读本章。</b>它们都在 <code>misc</code> 文件夹中。</p>
+<div class="box warn"><b class="t">前提</b>请在与 <code>start.bat</code> 相同的文件夹中打开命令提示符或 PowerShell 来执行命令。使用的是 <code>start.bat</code> 安装的 Python(<code>system\python\python.exe</code>)。下面示例中的 <code>%py%</code> 是它的简写。<br>
+  <code>set py=system\python\python.exe</code>(命令提示符)/ <code>$py = "system\python\python.exe"</code>(PowerShell)</div>
+
+<div class="tablewrap"><table>
+  <tr><th>脚本</th><th>作用</th><th>运行方式</th></tr>
+  <tr><td><code>gen_images.py</code></td><td>让 ComfyUI 按表情自动生成立绘</td><td><code>%py% misc\gen_images.py 设定.json</code></td></tr>
+  <tr><td><code>make_sprites.py</code></td><td>把生成的 PNG 的白色背景变透明,并转为 WebP(768px 以内)</td><td><code>%py% misc\make_sprites.py PNG文件夹 输出文件夹</code></td></tr>
+  <tr><td><code>make_zip.py</code></td><td>制作分发用的 zip(不包含 <code>user-data</code> 和 <code>models</code> 等)</td><td><code>%py% misc\make_zip.py</code></td></tr>
+  <tr><td><code>smoke_test.py</code></td><td>用模拟的 LLM 运行应用,把功能全面检查一遍</td><td><code>%py% misc\smoke_test.py</code></td></tr>
+</table></div>
+
+<h3 id="zh-tool-gen">自动制作表情立绘(gen_images.py → make_sprites.py)</h3>
+<p>这是一次性制作同一角色 8 种表情的流程。需要 <b>ComfyUI 正在运行,并且已安装模型</b>。</p>
+<ol>
+  <li>创建设定文件(JSON)。请复制下面的示例并修改。</li>
+  <li>通过环境变量 <code>COMFY_HOST</code> 告知 ComfyUI 的地址(未设置时为 <code>http://127.0.0.1:8188</code>)。<br>
+    <code>set COMFY_HOST=http://127.0.0.1:8188</code></li>
+  <li>执行 <code>%py% misc\gen_images.py 设定.json</code>。每种表情生成一张,以 <code>表情名.png</code> 保存到 <code>outdir</code>。只想重做某几种表情时,在后面用逗号分隔附上(例:<code>设定.json sad,happy</code>)。</li>
+  <li>用 <code>%py% misc\make_sprites.py PNG文件夹 输出文件夹</code> 转成背景透明的 WebP。这一转换会清除 PNG 中嵌入的提示词等信息。</li>
+  <li>把生成的 WebP 通过<a href="#zh-addchar">添加角色</a>界面登记。</li>
+</ol>
+<pre><code>{
+  "outdir": "misc/gen/mychar",
+  "prefix": "avt_mychar",
+  "checkpoint": "模型文件名.safetensors",
+  "width": 832, "height": 1216, "steps": 28, "cfg": 5.5, "seed": 12345,
+  "base": "1girl, solo, long hair, white blouse, upper body, simple background, white background",
+  "negative": "worst quality, low quality, bad anatomy, text, watermark",
+  "variants": {
+    "neutral": "closed mouth, light smile",
+    "happy": "bright smile, open mouth",
+    "sad": "sad, teary eyes",
+    "angry": "angry, furrowed brow",
+    "surprised": "surprised, wide eyes, open mouth",
+    "embarrassed": "embarrassed, blush, looking away",
+    "thinking": "thinking, hand on own chin, looking up",
+    "sleepy": "sleepy, half-closed eyes"
+  }
+}</code></pre>
+<ul>
+  <li><code>base</code> 是所有表情共通的外观,<code>variants</code> 是每种表情追加的词。<b>不改变 seed 和 base</b>,五官就会保持一致(<a href="#zh-av-make">制作要点</a>)。</li>
+  <li>想以一张基准图为底,只改变表情时,请像 <code>"init_image": "基准图.png"</code> 和 <code>"denoise": 0.6</code> 这样添加(denoise 越小越接近原图)。想按表情分别设置时,用 <code>"variant_denoise": {"sad": 0.7}</code>。</li>
+  <li>使背景透明的处理以<b>白色(单色)背景</b>为前提。请在 <code>base</code> 中加入 <code>white background</code>。</li>
+  <li>每张需要几十秒。超过 5 分钟还没完成,该表情就会报错。</li>
+  <li>ComfyUI 的工作流会自动组装成基本的单模型结构(checkpoint → KSampler → 保存)。无法使用 LoRA 和 ControlNet。</li>
+</ul>
+
+<h3 id="zh-tool-zip">制作分发用 zip(make_zip.py)</h3>
+<p>从项目文件夹制作一个排除了 <code>user-data</code>(对话与设置)、<code>system</code>、<code>downloads</code>、<code>llama.cpp</code>、<code>llama-swap</code>、<code>models</code> 以及工作用 <code>gen</code> 的 zip。输出位置是项目上一级的 <code>avatar-chat-dist\avatar-chat.zip</code>。想放到别处时,在最后加上输出路径(例:<code>%py% misc\make_zip.py C:\temp\a.zip</code>)。</p>
+
+<h3 id="zh-tool-test">运行检查(smoke_test.py)</h3>
+<p>把项目复制到临时文件夹,用模拟的 LLM 启动应用,把界面使用的 API 全部试一遍。最后显示 <code>RESULT: ALL PASSED</code> 即为成功。不会碰你的 <code>user-data</code>。用于修改代码后的检查。</p>
+<div class="box tip"><b class="t">注意</b>这些脚本是在作者的环境(Linux)中制作并运行的。并没有在 Windows 的 <code>system\python</code> 上全部实际试过。如果无法运行,请根据错误内容自行排查。</div>
+
+<footer>Avatar Chat 使用手册</footer>
+</main>
+</div>
+<div class="wrap" lang="es" data-lang="es" hidden>
+<nav>
+  <b>Índice</b>
+  <a href="#es-intro">1. ¿Qué es Avatar Chat?</a>
+  <a href="#es-start">2. Iniciar y salir</a>
+  <a href="#es-screen">3. La pantalla</a>
+  <a href="#es-settings">4. Ajustes</a>
+  <a href="#es-memory">5. Cómo funciona la memoria</a>
+  <a href="#es-web">6. Búsqueda web y clima</a>
+  <a href="#es-addchar">7. Añadir un personaje</a>
+  <a href="#es-avatar">8. Crear un avatar</a>
+  <a class="sub" href="#es-av-spec">Especificaciones de imagen</a>
+  <a class="sub" href="#es-av-emo">Las 8 expresiones</a>
+  <a class="sub" href="#es-av-make">Consejos para crearlas</a>
+  <a class="sub" href="#es-av-motion">Elegir el estilo de movimiento</a>
+  <a class="sub" href="#es-av-persona">Cómo escribir la personalidad</a>
+  <a class="sub" href="#es-av-file">Con archivos (avanzado)</a>
+  <a href="#es-lang">9. Cambiar de idioma</a>
+  <a href="#es-data">10. Datos, copia de seguridad y actualización</a>
+  <a href="#es-trouble">11. Solución de problemas</a>
+  <a href="#es-tools">12. Apéndice: herramientas para creadores</a>
+</nav>
+
+<main>
+<h1>Manual de Avatar Chat</h1>
+<p class="lead">Un chat en el que hablas con un LLM compatible con OpenAI y la expresión del avatar cambia según el contenido de cada respuesta. Este manual está en la misma carpeta que <code>start.bat</code>.</p>
+
+<h2 id="es-intro">1. ¿Qué es Avatar Chat?</h2>
+<ul>
+  <li><b>Las expresiones cambian</b> … En cada respuesta el LLM elige un estado de ánimo (feliz, triste…) y el avatar cambia a la imagen de esa expresión.</li>
+  <li><b>Memoria por personaje</b> … Anota automáticamente lo que conviene recordar de la conversación y se va desvaneciendo con el tiempo. Los personajes no comparten recuerdos.</li>
+  <li><b>Puedes añadir personajes</b> … Con las imágenes que quieras (capítulos 7 y 8).</li>
+  <li><b>Búsqueda web y clima</b> … Consulta solo cuando hace falta (capítulo 6; se necesita una clave de API de Brave Search).</li>
+  <li><b>Interfaz en 5 idiomas</b> … 日本語, English, 简体中文, Español, Português.</li>
+  <li><b>Funciona solo en tu PC</b> … Las conversaciones y los recuerdos se guardan en tu PC (<code>user-data</code>). Solo salen de él lo que se envía al LLM (nada, si es tu propio servidor) y las palabras de búsqueda cuando usas la búsqueda web.</li>
+</ul>
+
+<h2 id="es-start">2. Iniciar y salir</h2>
+<h3>Primer inicio</h3>
+<ol>
+  <li>Haz doble clic en <code>start.bat</code>. Se abre una ventana negra y, solo la primera vez, descarga automáticamente Python y otros componentes (requiere conexión a internet; tarda unos minutos).</li>
+  <li>A continuación aparece el menú «Local LLM setup» (configuración del LLM local). <b>Basta con pulsar una tecla numérica</b>.
+    <div class="tablewrap"><table>
+      <tr><th>Opción</th><th>Cuándo elegirla</th></tr>
+      <tr><td>1 Radeon</td><td>Tarjeta gráfica AMD. Instala la versión Vulkan de llama.cpp. También podría funcionar con GPU Intel o gráficos integrados (sin verificar; los gráficos integrados comparten la memoria, así que pueden ir lentos o no funcionar).</td></tr>
+      <tr><td>2 GeForce RTX 20 series or later</td><td>Tarjeta gráfica NVIDIA (8 GB de VRAM o más). Instala la versión CUDA.</td></tr>
+      <tr><td>3 I already have an LLM server</td><td>Para quien ya usa LM Studio, Ollama, llama.cpp, etc. Solo se registra la dirección de conexión (no se instala ningún servidor).</td></tr>
+      <tr><td>4 Skip</td><td>No hacer nada por ahora. Lo introduces tú más tarde en la pantalla de Ajustes.</td></tr>
+    </table></div>
+    Encima del menú se muestra el nombre de tu tarjeta gráfica. Si dudas, guíate por él.
+  </li>
+  <li>Si eliges 1 o 2, se descargan automáticamente llama.cpp, llama-swap y un modelo (Stheno v3.4 8B, unos 4,9 GB). Para no sobrecargar los servidores, el modelo se descarga <b>a propósito despacio (unos 17 minutos)</b>. <b>No cierres la ventana negra</b>. Aunque la cierres, al abrir <code>start.bat</code> de nuevo continúa desde donde se quedó.<br>
+    También te preguntará si quieres instalar un segundo modelo (Lumimaid v0.2 8B). Si dudas, «1 No» está bien.<br>
+    <b>Atención:</b> Tanto Stheno como Lumimaid son modelos ya algo antiguos y <b>flojos en japonés</b> (las frases pueden sonar poco naturales o salir mal construidas). Es una concesión a lo que se puede ejecutar con 8 GB de VRAM. Si quieres mejor calidad en japonés, sustitúyelos por un modelo más grande u otro en <code>llama-swap\config.yaml</code> (no funcionará si falta VRAM).</li>
+  <li>Al terminar, el navegador se abre solo y muestra la pantalla del chat. Si no se abre, entra en <code>http://127.0.0.1:8765</code> desde el navegador.</li>
+</ol>
+<div class="box tip"><b class="t">A partir de la segunda vez</b>No aparece el menú. Basta con hacer doble clic en <code>start.bat</code> (el servidor LLM también se inicia).</div>
+
+<h3>Salir</h3>
+<ul>
+  <li>Cierra la ventana negra de la aplicación (la de <code>start.bat</code>).</li>
+  <li>El servidor LLM instalado con la configuración (llama-swap) se ejecuta en <b>otra ventana pequeña (minimizada en la barra de tareas)</b>. Ciérrala también cuando termines (al cerrarla se libera la memoria de la GPU).</li>
+  <li>Aunque cierres de golpe en mitad de una conversación, lo hablado hasta ese momento queda guardado y lo que aún no se había convertido en recuerdos se procesa en el siguiente inicio.</li>
+</ul>
+
+<h3>Repetir la configuración</h3>
+<p>Haz doble clic en <code>setup-llm.bat</code> de la carpeta <code>misc</code> (aparece el mismo menú). Los archivos ya descargados se reutilizan.</p>
+
+<h2 id="es-screen">3. La pantalla</h2>
+<div class="ph">
+  <div><b>Izquierda: lista de personajes</b>Elegir personaje / <code>+ Añadir personaje</code> / idioma / <code>⚙ Ajustes</code></div>
+  <div><b>Centro: conversación</b>Arriba el avatar y el nombre; abajo el registro de la conversación y el cuadro de entrada. Junto al cuadro de entrada eliges el modo de búsqueda.</div>
+  <div><b>Derecha: recuerdos</b>Lo que recuerda ese personaje. Cuanto más corta la barra, más cerca está de olvidarse.</div>
+</div>
+<h3>Conversar</h3>
+<ul>
+  <li>Escribe en el cuadro de abajo y pulsa <b>Enviar</b> (o <kbd>Enter</kbd>). Para un salto de línea, <kbd>Shift</kbd>+<kbd>Enter</kbd>.</li>
+  <li>Al llegar la respuesta cambia la expresión del avatar y, pasado un rato, vuelve a la original (neutral).</li>
+  <li>Cuando la respuesta tarda, aparece «…». La primera vez, mientras se carga el modelo, tarda especialmente.</li>
+  <li>Cuando el personaje responde recordando algo, bajo el mensaje aparece tenuemente «Recuerdo: …».</li>
+</ul>
+<h3>Botones</h3>
+<div class="tablewrap"><table>
+  <tr><th>Botón</th><th>Qué hace</th></tr>
+  <tr><td>Borrar chat</td><td>Borra el registro de la conversación con ese personaje. Antes de borrar, lo que aún no se recordaba se convierte en recuerdos, así que <b>los recuerdos se conservan</b>.</td></tr>
+  <tr><td>Eliminar personaje</td><td>Solo aparece en los personajes que has añadido. Se borran la conversación y todos los recuerdos, y <b>no se puede deshacer</b>. Los personajes integrados (Mochi, Honoka, Rei) no se pueden eliminar.</td></tr>
+  <tr><td>La «×» de un recuerdo (derecha)</td><td>Borra ese recuerdo. Úsala cuando algo se haya recordado mal.</td></tr>
+</table></div>
+
+<h2 id="es-settings">4. Ajustes</h2>
+<p>Se abre con el botón <code>⚙ Ajustes</code> de abajo a la izquierda. Tras cambiar algo, pulsa <code>Guardar</code>.</p>
+<div class="tablewrap"><table>
+  <tr><th>Elemento</th><th>Significado</th></tr>
+  <tr><td>URL del servidor</td><td>La dirección del servidor LLM. Si usaste la configuración: <code>http://127.0.0.1:8080/v1</code>. LM Studio: <code>http://127.0.0.1:1234/v1</code>; Ollama: <code>http://127.0.0.1:11434/v1</code>.</td></tr>
+  <tr><td>Clave de API</td><td>Puede quedar vacía si el servidor está en tu propio PC. Introdúcela solo si usas un servicio externo. Tras guardar, aparece «Ya configurada».</td></tr>
+  <tr><td>Nombre del modelo</td><td>El modelo que se usará. Con «Obtener lista» a la derecha aparecen como sugerencias los modelos del servidor. Al hacer clic en el campo se muestran todas; al escribir se filtran. Si hiciste la configuración: <code>stheno-8b</code> (y <code>lumimaid-8b</code> si instalaste el segundo).</td></tr>
+  <tr><td>Cómo te llama el personaje</td><td>El nombre con el que el personaje se dirige a ti.</td></tr>
+  <tr><td>Clave de Brave Search API para la búsqueda web</td><td>Solo si usas la búsqueda web. Consulta el capítulo 6.</td></tr>
+  <tr><td>Código de país de la búsqueda / Número de resultados</td><td>El país de los resultados (p. ej. <code>ES</code>) y cuántos se obtienen (1–10).</td></tr>
+  <tr><td>Movimiento del avatar</td><td>Elige el movimiento en reposo del avatar: «Siempre activado / Seguir el ajuste «reducir animaciones» del sistema / Desactivado» (solo afecta a esta pantalla). Si el movimiento molesta, elige «Desactivado».</td></tr>
+  <tr><td>Temperatura</td><td>La variación de las respuestas. Más alta = más libre; más baja = más sobria (por defecto 0,8). Si las respuestas se descontrolan, bajarla a 0,5–0,7 las estabiliza.</td></tr>
+  <tr><td>Turnos de historial</td><td>Cuánta conversación reciente se envía al LLM cada vez (por defecto 12 turnos). Más turnos ayudan a mantener el contexto, pero pesan más.</td></tr>
+  <tr><td>Intervalo de memoria</td><td>Cada cuántos mensajes tuyos se organizan los recuerdos (por defecto 2). Cuanto menor, antes recuerda, pero se llama más veces al LLM.</td></tr>
+  <tr><td>Días base de memoria</td><td>Cuanto mayor, más despacio se olvida (por defecto 10 días). Consulta el capítulo 5.</td></tr>
+</table></div>
+<div class="box warn"><b class="t">Dónde se guardan las claves</b>Las claves se guardan en <b>texto plano</b> en <code>user-data\config.json</code>. No entregues esta carpeta a otras personas ni la publiques en internet.</div>
+
+<h2 id="es-memory">5. Cómo funciona la memoria</h2>
+<ul>
+  <li>Cada pocos intercambios, el LLM extrae «lo que conviene recordar» (nombres, gustos, promesas…) y lo anota.</li>
+  <li>Cada nota recibe una <b>importancia</b> (1–5). Cuanto más importante, más tiempo se conserva.</li>
+  <li>Con el tiempo baja la <b>fuerza</b> (la longitud de la barra). Pero cada vez que sale en la conversación y se recuerda, <b>se refuerza y cuesta más olvidarla</b>.</li>
+  <li>Un recuerdo cuya fuerza ha bajado demasiado deja de recordarse.</li>
+  <li>Los recuerdos están separados <b>por personaje</b>. Lo que le cuentas a Mochi, Honoka no lo sabe.</li>
+  <li>Al cerrar la pestaña, usar «Borrar chat» o en el siguiente inicio, la conversación que no se haya organizado se convierte automáticamente en recuerdos.</li>
+</ul>
+<p>Los recuerdos equivocados se pueden borrar con la «×» de la derecha.</p>
+
+<h2 id="es-web">6. Búsqueda web y clima</h2>
+<p>Cuando te preguntan por temas recientes o cosas que no conoce, el personaje puede buscar en la web y usar los resultados en su respuesta.</p>
+<ol>
+  <li>Obtén una clave de API en <a href="https://brave.com/search/api/">Brave Search API</a> (sitio externo).</li>
+  <li>Pégala en <code>⚙ Ajustes</code> → <code>Clave de Brave Search API</code> y guarda.</li>
+  <li>Elige el modo en el menú junto al cuadro de entrada.
+    <ul>
+      <li><b>🔍 Auto</b> … Busca solo cuando el personaje considera que hace falta (por defecto).</li>
+      <li><b>🔍 Siempre</b> … Busca en cada mensaje.</li>
+      <li><b>🔍 No</b> … No busca.</li>
+    </ul>
+  </li>
+</ol>
+<ul>
+  <li>Si no hay clave, el menú muestra «🔍 Sin clave». Al hacer clic se abre la pantalla de Ajustes.</li>
+  <li>Cuando se ha buscado, bajo el mensaje aparecen las palabras buscadas y los enlaces de las fuentes.</li>
+  <li>Las <b>preguntas sobre el clima</b> que incluyen un lugar de Japón (p. ej. «¿Qué tiempo hará mañana en Fukuoka?») se responden con los <b>datos oficiales de la Agencia Meteorológica de Japón</b> en lugar de una búsqueda (también en español y otros idiomas). Funciona cuando el modo de búsqueda no es «No». Con el diseño actual de la pantalla, <b>sin clave de Brave Search API no se puede usar el modo de búsqueda y esta función del clima tampoco funciona</b> (obtener el clima en sí no cuesta nada).</li>
+</ul>
+<div class="box warn"><b class="t">Privacidad</b>Al usar la búsqueda, las palabras buscadas se envían a Brave. No se envía la conversación completa.</div>
+
+<h2 id="es-addchar">7. Añadir un personaje</h2>
+<ol>
+  <li>Pulsa <code>+ Añadir personaje</code> a la izquierda.</li>
+  <li>Rellena lo siguiente.
+    <div class="tablewrap"><table>
+      <tr><th>Elemento</th><th>Qué escribir</th></tr>
+      <tr><td>Nombre</td><td>Obligatorio.</td></tr>
+      <tr><td>Personalidad y forma de hablar</td><td>La base de la personalidad del personaje. Cómo escribirla: <a href="#es-av-persona">capítulo 8</a>.</td></tr>
+      <tr><td>Primer saludo</td><td>Opcional. Se muestra primero al elegir el personaje.</td></tr>
+      <tr><td>Estilo de movimiento del avatar</td><td>«Criatura / chibi» o «Humano» (<a href="#es-av-motion">la diferencia</a>).</td></tr>
+      <tr><td>Imágenes de expresión</td><td><b>La neutral es obligatoria</b>; las demás son opcionales. Las expresiones que falten se muestran con la neutral.</td></tr>
+    </table></div>
+  </li>
+  <li>Pulsa <code>Añadir</code> y el personaje aparece en la lista.</li>
+</ol>
+<p>Los personajes añadidos se guardan en <code>user-data\characters</code>. Para eliminarlos, selecciona el personaje y pulsa <code>Eliminar personaje</code>.</p>
+<div class="box tip"><b class="t">Prueba primero solo con la neutral</b>Conviene añadir el personaje al principio solo con la imagen neutral, comprobar cómo se mueve y luego ir añadiendo las demás expresiones. La pantalla solo permite crear personajes nuevos; para cambiar imágenes después hay que volver a crear el personaje o <a href="#es-av-file">reemplazar los archivos directamente</a>.</div>
+
+<h2 id="es-avatar">8. Crear un avatar</h2>
+<p>El avatar consiste simplemente en intercambiar «una imagen por expresión». <b>Tanto si sabes dibujar como si usas una IA de generación de imágenes, los pasos son los mismos</b>.</p>
+
+<h3 id="es-av-spec">Especificaciones de imagen</h3>
+<div class="tablewrap"><table>
+  <tr><th>Elemento</th><th>Detalle</th></tr>
+  <tr><td>Formato</td><td>PNG, JPEG, WebP, etc. (al añadir desde la pantalla). El SVG no se puede añadir desde la pantalla (solo <a href="#es-av-file">colocándolo como archivo</a>).</td></tr>
+  <tr><td>Fondo</td><td>Se recomienda <b>transparente</b> (sin fondo). Con fondo también funciona, pero se verá un marco rectangular.</td></tr>
+  <tr><td>Tamaño</td><td>Se convierte automáticamente a WebP con el <b>lado largo de 768 px como máximo</b> (solo se reduce; las imágenes pequeñas no se amplían). Se muestra con unos 300 px de alto, así que 512–768 px por lado son más que suficientes.</td></tr>
+  <tr><td>Cantidad</td><td>Neutral (obligatoria) + hasta 7 más (8 expresiones en total).</td></tr>
+  <tr><td>Orientación y encuadre</td><td>Cuerpo entero o medio cuerpo. Como se muestra pequeño, usa un encuadre en el que <b>la cara se vea con claridad</b>.</td></tr>
+</table></div>
+
+<h3 id="es-av-emo">Las 8 expresiones</h3>
+<p>El LLM lee las descripciones siguientes y elige «qué expresión encaja con la respuesta actual».</p>
+<div class="tablewrap"><table>
+  <tr><th>Nombre</th><th>Significado</th><th>Cuándo se usa</th></tr>
+  <tr><td><code>neutral</code></td><td>Neutral (obligatoria)</td><td>Conversación tranquila. La cara de siempre.</td></tr>
+  <tr><td><code>happy</code></td><td>Feliz</td><td>Alegría, diversión, recibir un elogio.</td></tr>
+  <tr><td><code>sad</code></td><td>Triste</td><td>Tristeza, decepción, desánimo.</td></tr>
+  <tr><td><code>angry</code></td><td>Enfadado</td><td>Enfado, disgusto, estar de morros.</td></tr>
+  <tr><td><code>surprised</code></td><td>Sorprendido</td><td>Sorpresa, algo inesperado.</td></tr>
+  <tr><td><code>embarrassed</code></td><td>Avergonzado</td><td>Timidez, vergüenza.</td></tr>
+  <tr><td><code>thinking</code></td><td>Pensando</td><td>Estar pensativo, dudar. También aparece mientras se espera la respuesta.</td></tr>
+  <tr><td><code>sleepy</code></td><td>Con sueño</td><td>Sueño, calma, aburrimiento.</td></tr>
+</table></div>
+<p>Funciona sin tener todas, pero contar con <b>neutral, happy y sad</b> cambia bastante la impresión.</p>
+
+<h3 id="es-av-make">Consejos para crearlas</h3>
+<ul>
+  <li><b>Que parezca la misma persona</b> es lo más importante. Si la cara, el peinado o la ropa cambian de una expresión a otra, parecerán personas distintas.</li>
+  <li><b>Si usas una IA de generación de imágenes</b>
+    <ul>
+      <li>Primero decide una imagen neutral.</li>
+      <li>Para las demás expresiones, mantén la <b>misma semilla (seed) y el mismo prompt</b> y cambia solo las palabras relativas a la expresión (sonriendo, llorando, cara de enfado, etc.).</li>
+      <li>Para más estabilidad, usa la neutral como imagen original y genera con imagen a imagen con un cambio débil (con un ajuste que conserve mucho la original).</li>
+      <li>En cada generación, comprueba que no hayan cambiado la cara, el pelo, la ropa ni objetos pequeños como lazos, y rehaz cualquier imagen en la que aparezca algo raro.</li>
+    </ul>
+  </li>
+  <li><b>Si dibujas</b> … Dibuja la neutral y luego redibuja solo los ojos, las cejas y la boca; es lo más cómodo. Usa el mismo tamaño de lienzo para todas las expresiones.</li>
+  <li><b>Fondo transparente</b> … Genera o dibuja con el fondo de un solo color y conviértelo en un PNG transparente con una herramienta de recorte (como «quitar fondo» de los editores de imagen).</li>
+  <li><b>Igualar el lienzo y los pies</b> … Si el tamaño o la posición del personaje varían entre expresiones, el avatar parece dar un salto al cambiar. Usa <b>el mismo tamaño de lienzo y la misma posición en todas las expresiones</b>. El avatar se mueve con los pies como punto de apoyo, por lo que es importante <b>alinear los pies (el borde inferior)</b>.</li>
+  <li><b>Ojo con los derechos</b> … Respeta las reglas de los dibujos de otras personas y de los modelos o materiales con condiciones de uso. Compruébalo especialmente al publicar o distribuir.</li>
+</ul>
+
+<h3 id="es-av-motion">Elegir el estilo de movimiento</h3>
+<div class="tablewrap"><table>
+  <tr><th>Tipo</th><th>Movimiento</th><th>Ideal para</th></tr>
+  <tr><td>Criatura / chibi (<code>squash</code>)</td><td>Se aplasta y se estira, y rebota. Salta cuando está feliz.</td><td>Mascotas, animales, criaturas misteriosas.</td></tr>
+  <tr><td>Humano (<code>soft</code>)</td><td>No deforma el cuerpo; solo sube/baja y una inclinación mínima.</td><td>Personajes humanos.</td></tr>
+</table></div>
+<p>Si eliges «criatura» para un dibujo de una persona, el cuerpo se deforma y queda poco natural. Usa «Humano». Si el movimiento estorba, puedes desactivarlo con <code>Movimiento del avatar</code> en Ajustes.</p>
+
+<h3 id="es-av-persona">Cómo escribir la personalidad</h3>
+<p>«Personalidad y forma de hablar» se pasa tal cual al LLM. Cuanto <b>más breve y concreto</b>, más estable resulta incluso con un modelo pequeño. Los personajes integrados (<code>character.json</code> en la carpeta <code>characters</code>) sirven de modelo.</p>
+<ul>
+  <li><b>Datos básicos</b> … Edad, cómo se refiere a sí mismo, sentimientos hacia ti.</li>
+  <li><b>Forma de hablar</b> … Muletillas y terminaciones de frase, y <b>3–4 frases de ejemplo</b>. Los ejemplos son lo que más funciona.</li>
+  <li><b>Comportamiento</b> (en viñetas) … p. ej.: «Responde en 1–3 frases», «Contesta lo que se le pregunta; no repite las mismas palabras», «Si no lo sabe, dice con sinceridad que no lo sabe».</li>
+  <li><b>Detonantes de expresión</b> … p. ej.: si escribes «se avergüenza cuando lo elogian de verdad», aparecerá más a menudo <code>embarrassed</code>.</li>
+</ul>
+<pre><code>Ejemplo: Una criatura misteriosa y tranquila. Se llama a sí misma «yo». Termina las frases con «-mochi».
+[Forma de hablar] Despacio y con dulzura. Ej.: «Buenos días, mochi» «Qué bonito, mochi»
+[Comportamiento]
+- Responde en 1-3 frases.
+- Contesta lo que se le pregunta. No repite las mismas palabras.
+- Se avergüenza cuando la elogian.</code></pre>
+
+<h3 id="es-av-file">Con archivos (avanzado)</h3>
+<p>Cuando la pantalla se queda corta (usar imágenes SVG, tener más de 8 expresiones, corregir los ajustes, etc.), puedes crear la carpeta y los archivos directamente.</p>
+<ol>
+  <li>Dentro de <code>user-data\characters</code>, crea una carpeta con el nombre que quieras (letras y números). Ejemplo: <code>user-data\characters\sakura</code></li>
+  <li>Coloca allí las imágenes de expresión (png / webp / svg, etc.) y un <code>character.json</code>.</li>
+  <li>Recarga el navegador (<kbd>F5</kbd>).</li>
+</ol>
+<pre><code>{
+  "name": "Sakura",
+  "persona": "Una chica tranquila de 18 años. …",
+  "greeting": "Hola. Has venido, ¿verdad?",
+  "motion": "soft",
+  "fallback": "neutral",
+  "emotions": {
+    "neutral": { "file": "neutral.webp", "hint": "Estado normal. Conversación tranquila" },
+    "happy":   { "file": "happy.webp",   "hint": "Alegría, diversión, elogios" },
+    "sad":     { "file": "sad.webp",     "hint": "Tristeza, decepción, desánimo" }
+  }
+}</code></pre>
+<ul>
+  <li><code>motion</code> es <code>soft</code> (humano) o <code>squash</code> (por defecto).</li>
+  <li><code>fallback</code> es la expresión que se usa cuando falta la correspondiente (normalmente <code>neutral</code>).</li>
+  <li><code>hint</code> es la descripción de «cuándo usar esta expresión»; el LLM la lee para elegir. Si la reescribes, solo cambia cómo aparecen las expresiones en ese personaje. Si se omite, se usa la descripción estándar.</li>
+  <li>También puedes tener nombres de expresión distintos de los 8 (p. ej. <code>shy</code>). En ese caso escribe siempre un <code>hint</code>.</li>
+  <li>Conviene hacer una copia de seguridad de <code>user-data</code> antes de editar (capítulo 10). Si te equivocas con una <code>,</code> o un <code>"</code> del JSON, ese personaje desaparecerá de la lista.</li>
+</ul>
+
+<h2 id="es-lang">9. Cambiar de idioma</h2>
+<p>Con el menú de idioma de abajo a la izquierda puedes elegir 日本語, English, 简体中文, Español o Português. Al cambiar, se modifica lo siguiente.</p>
+<ul>
+  <li>Los textos de la pantalla y los mensajes como los errores.</li>
+  <li>El nombre, la personalidad y el saludo de los personajes integrados (Mochi, Honoka, Rei).</li>
+  <li><b>El idioma de las respuestas del personaje</b> (se le indica que responda en ese idioma).</li>
+</ul>
+<p>El nombre, la configuración y el saludo de los personajes que añadas se quedan en el idioma en que los escribiste.</p>
+<div class="box warn"><b class="t">Atención</b>
+  <ul>
+    <li>Las pantallas en inglés, chino, español y portugués y las traducciones de los personajes integrados son traducción automática y no han sido revisadas por hablantes nativos. Puede haber expresiones poco naturales.</li>
+    <li>Cada modelo domina distintos idiomas. Los modelos pequeños como Stheno son más estables en inglés. El japonés es más débil.</li>
+    <li>Cambiar de idioma no modifica el idioma de los registros de conversación existentes.</li>
+    <li>Este manual está disponible en japonés, inglés, chino, español y portugués (consulta las pestañas de arriba); las traducciones también son automáticas.</li>
+  </ul>
+</div>
+
+<h2 id="es-data">10. Datos, copia de seguridad y actualización</h2>
+<div class="tablewrap"><table>
+  <tr><th>Carpeta / archivo</th><th>Contenido</th><th>Si lo borras</th></tr>
+  <tr><td><code>user-data\</code></td><td>Ajustes (<code>config.json</code>), conversaciones y recuerdos (<code>app.db</code>), personajes añadidos</td><td><b>Se pierde todo.</b> Con copiar solo esto basta para mudarte a otro PC.</td></tr>
+  <tr><td><code>system\</code></td><td>El conjunto de Python instalado automáticamente</td><td>Se rehace en el siguiente inicio (nueva descarga).</td></tr>
+  <tr><td><code>llama.cpp\</code> <code>llama-swap\</code></td><td>Ejecutables del LLM local</td><td>Reinstalar con <code>misc\setup-llm.bat</code>.</td></tr>
+  <tr><td><code>models\</code></td><td>Archivos de modelos LLM (unos 4,9 GB cada uno)</td><td>Volver a descargar.</td></tr>
+  <tr><td><code>misc\downloads\</code></td><td>Lugar donde se guardan los zip descargados</td><td>Se puede borrar (libera espacio).</td></tr>
+</table></div>
+<h3>Copia de seguridad</h3>
+<p>Cierra la aplicación y copia la carpeta <code>user-data</code> entera. Para restaurar, cópiala de vuelta sobrescribiendo en el mismo sitio.</p>
+<h3>Actualizar</h3>
+<ol>
+  <li>Descomprime el zip nuevo.</li>
+  <li>Copia las carpetas <code>app</code>, <code>characters</code> y <code>misc</code>, además de <code>start.bat</code> y los <code>manual.html</code>, sobre tu carpeta actual (<b>sobrescribir</b>).</li>
+  <li>Inicia con <code>start.bat</code>.</li>
+</ol>
+<p><code>user-data</code>, <code>system</code>, <code>models</code>, etc. no están en el zip, por lo que <b>no se borran al sobrescribir</b>.</p>
+
+<h2 id="es-trouble">11. Solución de problemas</h2>
+<div class="tablewrap"><table>
+  <tr><th>Síntoma</th><th>Qué comprobar</th></tr>
+  <tr><td>Aparece un aviso para indicar el nombre del modelo en Ajustes</td><td>El <code>Nombre del modelo</code> de Ajustes está vacío. Elige uno con «Obtener lista» y guarda.</td></tr>
+  <tr><td>No llega respuesta / errores como «No se puede conectar»</td><td>¿Está en marcha el servidor LLM? Si usaste la configuración, comprueba que haya una pequeña ventana de llama-swap en la barra de tareas. Si no, ejecuta <code>start.bat</code> otra vez. LM Studio y Ollama hay que iniciarlos antes. Comprueba también que la <code>URL del servidor</code> sea correcta.</td></tr>
+  <tr><td>La primera respuesta tarda muchísimo</td><td>La primera vez se carga el modelo en la GPU, lo que lleva decenas de segundos. A partir de la segunda va más rápido.</td></tr>
+  <tr><td>Siempre lento / se detiene a mitad</td><td>Puede que falte memoria en la GPU. Prueba a cerrar otras aplicaciones (juegos, generación de imágenes, etc.), a reducir los <code>Turnos de historial</code> en Ajustes o a cambiar <code>-c 8192</code> por <code>-c 4096</code> en <code>llama-swap\config.yaml</code>.</td></tr>
+  <tr><td>El formato de la respuesta se rompe o se repite</td><td>Baja la <code>Temperatura</code> a 0,5–0,7. Si no se arregla, prueba otro modelo. La aplicación también vuelve a leer e intenta de nuevo las respuestas rotas.</td></tr>
+  <tr><td>La expresión no cambia</td><td>Puede que el personaje tenga una sola imagen (solo neutral). <a href="#es-av-emo">Añade más expresiones</a>.</td></tr>
+  <tr><td>No aumentan los recuerdos</td><td>Se organizan cada pocos intercambios. Reduce el <code>Intervalo de memoria</code> o usa <code>Borrar chat</code> para organizar todo lo anterior.</td></tr>
+  <tr><td>El navegador no se abre</td><td>Abre <code>http://127.0.0.1:8765</code> manualmente. Si el puerto está en uso, se usa automáticamente el siguiente número (8766…); mira la dirección que aparece en la ventana negra.</td></tr>
+  <tr><td>La búsqueda no funciona</td><td>No hay clave de Brave, o el menú junto al cuadro de entrada está en «No». Consulta el capítulo 6.</td></tr>
+  <tr><td>Falló la descarga de la configuración</td><td>Comprueba la conexión a internet y abre de nuevo <code>start.bat</code> (o <code>misc\setup-llm.bat</code>). Continúa desde donde se quedó.</td></tr>
+  <tr><td>Un personaje desapareció de la lista</td><td>Puede haber un error de formato en <code>character.json</code>. Compáralo con el ejemplo de <a href="#es-av-file">«Con archivos» del capítulo 8</a>.</td></tr>
+</table></div>
+
+<h2 id="es-tools">12. Apéndice: herramientas para creadores (avanzado)</h2>
+<p>Scripts de línea de comandos que sirven para crear imágenes de avatar y paquetes de distribución. <b>Si solo vas a usar la aplicación con normalidad, no hace falta leer este capítulo.</b> Todos están en la carpeta <code>misc</code>.</p>
+<div class="box warn"><b class="t">Requisitos previos</b>Ejecuta los comandos abriendo el Símbolo del sistema o PowerShell en la misma carpeta que <code>start.bat</code>. Se usa el Python que instala <code>start.bat</code> (<code>system\python\python.exe</code>). El <code>%py%</code> de los ejemplos siguientes es una forma abreviada de escribirlo.<br>
+  <code>set py=system\python\python.exe</code> (Símbolo del sistema) / <code>$py = "system\python\python.exe"</code> (PowerShell)</div>
+
+<div class="tablewrap"><table>
+  <tr><th>Script</th><th>Qué hace</th><th>Cómo ejecutarlo</th></tr>
+  <tr><td><code>gen_images.py</code></td><td>Hace que ComfyUI genere automáticamente las imágenes del personaje para cada expresión</td><td><code>%py% misc\gen_images.py especificacion.json</code></td></tr>
+  <tr><td><code>make_sprites.py</code></td><td>Vuelve transparente el fondo blanco de los PNG generados y los convierte a WebP (máx. 768 px)</td><td><code>%py% misc\make_sprites.py carpeta_PNG carpeta_salida</code></td></tr>
+  <tr><td><code>make_zip.py</code></td><td>Crea el zip de distribución (no incluye <code>user-data</code>, <code>models</code>, etc.)</td><td><code>%py% misc\make_zip.py</code></td></tr>
+  <tr><td><code>smoke_test.py</code></td><td>Ejecuta la aplicación con un LLM de pega y comprueba que todo funciona</td><td><code>%py% misc\smoke_test.py</code></td></tr>
+</table></div>
+
+<h3 id="es-tool-gen">Generar automáticamente las imágenes de expresión (gen_images.py → make_sprites.py)</h3>
+<p>Este es el flujo para crear de una vez las 8 expresiones de un mismo personaje. Hace falta que <b>ComfyUI esté en marcha y tenga un modelo instalado</b>.</p>
+<ol>
+  <li>Crea un archivo de especificación (JSON). Copia el ejemplo de abajo y modifícalo.</li>
+  <li>Indica la dirección de ComfyUI con la variable de entorno <code>COMFY_HOST</code> (si no está definida, <code>http://127.0.0.1:8188</code>).<br>
+    <code>set COMFY_HOST=http://127.0.0.1:8188</code></li>
+  <li>Ejecuta <code>%py% misc\gen_images.py especificacion.json</code>. Genera una imagen por expresión y la guarda en <code>outdir</code> como <code>nombre_de_la_expresion.png</code>. Para rehacer solo algunas expresiones, añádelas al final separadas por comas (p. ej. <code>especificacion.json sad,happy</code>).</li>
+  <li>Con <code>%py% misc\make_sprites.py carpeta_PNG carpeta_salida</code> se obtienen WebP con fondo transparente. Esta conversión elimina la información incrustada en el PNG, como el prompt.</li>
+  <li>Registra los WebP resultantes desde la pantalla <a href="#es-addchar">Añadir personaje</a>.</li>
+</ol>
+<pre><code>{
+  "outdir": "misc/gen/mychar",
+  "prefix": "avt_mychar",
+  "checkpoint": "nombre_del_archivo_del_modelo.safetensors",
+  "width": 832, "height": 1216, "steps": 28, "cfg": 5.5, "seed": 12345,
+  "base": "1girl, solo, long hair, white blouse, upper body, simple background, white background",
+  "negative": "worst quality, low quality, bad anatomy, text, watermark",
+  "variants": {
+    "neutral": "closed mouth, light smile",
+    "happy": "bright smile, open mouth",
+    "sad": "sad, teary eyes",
+    "angry": "angry, furrowed brow",
+    "surprised": "surprised, wide eyes, open mouth",
+    "embarrassed": "embarrassed, blush, looking away",
+    "thinking": "thinking, hand on own chin, looking up",
+    "sleepy": "sleepy, half-closed eyes"
+  }
+}</code></pre>
+<ul>
+  <li><code>base</code> es el aspecto común a todas las expresiones y <code>variants</code> son las palabras que se añaden en cada una. <b>No cambiar seed ni base</b> mantiene el rostro coherente (<a href="#es-av-make">Consejos para crearlas</a>).</li>
+  <li>Para cambiar solo la expresión a partir de una imagen de referencia, añade <code>"init_image": "referencia.png"</code> y <code>"denoise": 0.6</code> (cuanto menor es denoise, más se parece a la original). Para variarlo por expresión, usa <code>"variant_denoise": {"sad": 0.7}</code>.</li>
+  <li>El proceso que vuelve transparente el fondo da por supuesto un <b>fondo blanco liso</b>. Pon <code>white background</code> en <code>base</code>.</li>
+  <li>Cada imagen tarda decenas de segundos. Si pasados 5 minutos no ha terminado, esa expresión da error.</li>
+  <li>El flujo de trabajo de ComfyUI se monta automáticamente con una configuración básica de un solo modelo (checkpoint → KSampler → guardar). No se pueden usar LoRA ni ControlNet.</li>
+</ul>
+
+<h3 id="es-tool-zip">Crear el zip de distribución (make_zip.py)</h3>
+<p>Crea, a partir de la carpeta del proyecto, un zip sin <code>user-data</code> (conversaciones y ajustes), <code>system</code>, <code>downloads</code>, <code>llama.cpp</code>, <code>llama-swap</code>, <code>models</code> ni la carpeta de trabajo <code>gen</code>. El destino es <code>avatar-chat-dist\avatar-chat.zip</code>, un nivel por encima del proyecto. Para ponerlo en otro sitio, añade el destino al final (p. ej. <code>%py% misc\make_zip.py C:\temp\a.zip</code>).</p>
+
+<h3 id="es-tool-test">Comprobar el funcionamiento (smoke_test.py)</h3>
+<p>Copia el proyecto a una carpeta temporal, inicia la aplicación con un LLM de pega y prueba una a una las API que usa la pantalla. Si al final aparece <code>RESULT: ALL PASSED</code>, ha ido bien. No toca tu <code>user-data</code>. Sirve para comprobar después de corregir el código.</p>
+<div class="box tip"><b class="t">Atención</b>Estos scripts se hicieron y se han ejecutado en el entorno del autor (Linux). No todos se han probado realmente con el <code>system\python</code> de Windows. Si algo no funciona, investiga a partir del mensaje de error.</div>
+
+<footer>Manual de Avatar Chat</footer>
+</main>
+</div>
+<div class="wrap" lang="pt-BR" data-lang="pt" hidden>
+<nav>
+  <b>Índice</b>
+  <a href="#pt-intro">1. O que é o Avatar Chat</a>
+  <a href="#pt-start">2. Iniciar e sair</a>
+  <a href="#pt-screen">3. A tela</a>
+  <a href="#pt-settings">4. Configurações</a>
+  <a href="#pt-memory">5. Como a memória funciona</a>
+  <a href="#pt-web">6. Pesquisa na web e clima</a>
+  <a href="#pt-addchar">7. Adicionar um personagem</a>
+  <a href="#pt-avatar">8. Criar um avatar</a>
+  <a class="sub" href="#pt-av-spec">Especificações da imagem</a>
+  <a class="sub" href="#pt-av-emo">As 8 expressões</a>
+  <a class="sub" href="#pt-av-make">Dicas para criar</a>
+  <a class="sub" href="#pt-av-motion">Como escolher o movimento</a>
+  <a class="sub" href="#pt-av-persona">Como escrever a personalidade</a>
+  <a class="sub" href="#pt-av-file">Usando arquivos (avançado)</a>
+  <a href="#pt-lang">9. Trocar o idioma</a>
+  <a href="#pt-data">10. Dados, backup e atualização</a>
+  <a href="#pt-trouble">11. Solução de problemas</a>
+  <a href="#pt-tools">12. Apêndice: ferramentas para criadores</a>
+</nav>
+
+<main>
+<h1>Manual do Avatar Chat</h1>
+<p class="lead">Um chat em que você conversa com um LLM compatível com OpenAI e a expressão do avatar muda conforme o conteúdo de cada resposta. Este manual fica na mesma pasta que o <code>start.bat</code>.</p>
+
+<h2 id="pt-intro">1. O que é o Avatar Chat</h2>
+<ul>
+  <li><b>As expressões mudam</b> … A cada resposta, o LLM escolhe um sentimento (feliz, triste…) e o avatar troca para a imagem dessa expressão.</li>
+  <li><b>Memória por personagem</b> … Anota automaticamente o que vale a pena lembrar das conversas, e isso vai esmaecendo com o tempo. Os personagens não compartilham memórias.</li>
+  <li><b>Você pode adicionar personagens</b> … Com as imagens que quiser (capítulos 7 e 8).</li>
+  <li><b>Pesquisa na web e clima</b> … Consulta apenas quando necessário (capítulo 6; é preciso uma chave de API do Brave Search).</li>
+  <li><b>Interface em 5 idiomas</b> … 日本語, English, 简体中文, Español, Português.</li>
+  <li><b>Funciona só no seu PC</b> … As conversas e memórias ficam salvas no seu PC (<code>user-data</code>). O que sai dele é apenas o que é enviado ao LLM (nada, se for o seu próprio servidor) e os termos de busca quando você usa a pesquisa na web.</li>
+</ul>
+
+<h2 id="pt-start">2. Iniciar e sair</h2>
+<h3>Primeira inicialização</h3>
+<ol>
+  <li>Dê um clique duplo em <code>start.bat</code>. Abre-se uma janela preta que, somente na primeira vez, baixa automaticamente o Python e outros componentes (requer conexão com a internet; leva alguns minutos).</li>
+  <li>Em seguida aparece o menu "Local LLM setup" (configuração do LLM local). <b>Basta pressionar uma tecla numérica</b>.
+    <div class="tablewrap"><table>
+      <tr><th>Opção</th><th>Quando escolher</th></tr>
+      <tr><td>1 Radeon</td><td>Placa de vídeo AMD. Instala a versão Vulkan do llama.cpp. Pode funcionar também com GPUs Intel e gráficos integrados (não verificado; gráficos integrados compartilham a memória, então podem ficar lentos ou não funcionar).</td></tr>
+      <tr><td>2 GeForce RTX 20 series or later</td><td>Placa de vídeo NVIDIA (8 GB de VRAM ou mais). Instala a versão CUDA.</td></tr>
+      <tr><td>3 I already have an LLM server</td><td>Para quem já usa LM Studio, Ollama, llama.cpp etc. Registra apenas o endereço de conexão (nenhum servidor é instalado).</td></tr>
+      <tr><td>4 Skip</td><td>Não fazer nada por enquanto. Você preenche depois na tela de Configurações.</td></tr>
+    </table></div>
+    O nome da sua placa de vídeo aparece acima do menu. Se estiver em dúvida, escolha com base nele.
+  </li>
+  <li>Se escolher 1 ou 2, o llama.cpp, o llama-swap e um modelo (Stheno v3.4 8B, cerca de 4,9 GB) são baixados automaticamente. Para não sobrecarregar os servidores, o modelo é baixado <b>de propósito devagar (cerca de 17 minutos)</b>. <b>Não feche a janela preta</b>. Mesmo que feche, ao abrir o <code>start.bat</code> de novo ele continua de onde parou.<br>
+    Também será perguntado se você quer instalar um segundo modelo (Lumimaid v0.2 8B). Na dúvida, "1 No" está bom.<br>
+    <b>Atenção:</b> Tanto o Stheno quanto o Lumimaid já são modelos um pouco antigos e <b>fracos em japonês</b> (o jeito de falar pode ficar artificial ou as frases podem sair estranhas). É uma concessão ao que roda em 8 GB de VRAM. Se quiser mais qualidade em japonês, troque por um modelo maior ou outro em <code>llama-swap\config.yaml</code> (não funcionará se faltar VRAM).</li>
+  <li>Ao terminar, o navegador abre sozinho e mostra a tela do chat. Se não abrir, acesse <code>http://127.0.0.1:8765</code> no navegador.</li>
+</ol>
+<div class="box tip"><b class="t">A partir da segunda vez</b>O menu não aparece. Basta dar um clique duplo em <code>start.bat</code> (o servidor LLM também é iniciado).</div>
+
+<h3>Sair</h3>
+<ul>
+  <li>Feche a janela preta do aplicativo (a do <code>start.bat</code>).</li>
+  <li>O servidor LLM instalado pela configuração (llama-swap) roda em <b>outra janelinha (minimizada na barra de tarefas)</b>. Feche-a também quando terminar (ao fechar, a memória da GPU é liberada).</li>
+  <li>Mesmo que você feche de repente no meio de uma conversa, o que foi dito até ali fica salvo, e o que ainda não virou memória é processado na próxima inicialização.</li>
+</ul>
+
+<h3>Refazer a configuração</h3>
+<p>Dê um clique duplo em <code>setup-llm.bat</code> na pasta <code>misc</code> (aparece o mesmo menu). Os arquivos já baixados são reaproveitados.</p>
+
+<h2 id="pt-screen">3. A tela</h2>
+<div class="ph">
+  <div><b>Esquerda: lista de personagens</b>Escolher personagem / <code>+ Adicionar personagem</code> / idioma / <code>⚙ Configurações</code></div>
+  <div><b>Centro: conversa</b>Em cima o avatar e o nome; embaixo o histórico da conversa e o campo de entrada. Ao lado do campo de entrada você escolhe o modo de pesquisa.</div>
+  <div><b>Direita: memórias</b>O que esse personagem lembra. Quanto mais curta a barra, mais perto de ser esquecida.</div>
+</div>
+<h3>Conversando</h3>
+<ul>
+  <li>Digite no campo de baixo e pressione <b>Enviar</b> (ou <kbd>Enter</kbd>). Para quebrar a linha, <kbd>Shift</kbd>+<kbd>Enter</kbd>.</li>
+  <li>Quando a resposta chega, a expressão do avatar muda e, depois de um tempo, volta à original (neutra).</li>
+  <li>Quando a resposta demora, aparece "…". Na primeira vez, enquanto o modelo é carregado, demora especialmente.</li>
+  <li>Quando o personagem responde usando uma memória, "Lembrei: …" aparece de forma discreta sob a mensagem.</li>
+</ul>
+<h3>Botões</h3>
+<div class="tablewrap"><table>
+  <tr><th>Botão</th><th>O que faz</th></tr>
+  <tr><td>Limpar conversa</td><td>Apaga o histórico da conversa com esse personagem. Antes de apagar, o que ainda não foi memorizado vira memória, então <b>as memórias permanecem</b>.</td></tr>
+  <tr><td>Excluir personagem</td><td>Aparece apenas para personagens que você adicionou. A conversa e todas as memórias são apagadas e <b>não podem ser restauradas</b>. Os personagens integrados (Mochi, Honoka, Rei) não podem ser excluídos.</td></tr>
+  <tr><td>O "×" de uma memória (à direita)</td><td>Apaga essa memória. Use quando algo tiver sido memorizado errado.</td></tr>
+</table></div>
+
+<h2 id="pt-settings">4. Configurações</h2>
+<p>Abra com o botão <code>⚙ Configurações</code> no canto inferior esquerdo. Depois de alterar, pressione <code>Salvar</code>.</p>
+<div class="tablewrap"><table>
+  <tr><th>Item</th><th>Significado</th></tr>
+  <tr><td>URL do servidor</td><td>O endereço do servidor LLM. Se você usou a configuração: <code>http://127.0.0.1:8080/v1</code>. LM Studio: <code>http://127.0.0.1:1234/v1</code>; Ollama: <code>http://127.0.0.1:11434/v1</code>.</td></tr>
+  <tr><td>Chave de API</td><td>Pode ficar em branco se o servidor estiver no seu próprio PC. Informe apenas ao usar um serviço externo. Depois de salvar, aparece "Já configurada".</td></tr>
+  <tr><td>Nome do modelo</td><td>O modelo a ser usado. Com "Obter lista" à direita, os modelos do servidor aparecem como opções. Clique no campo para ver todas as opções; digite para filtrar. Se você fez a configuração: <code>stheno-8b</code> (e <code>lumimaid-8b</code> se instalou o segundo).</td></tr>
+  <tr><td>Como o personagem chama você</td><td>O nome que o personagem usa para se dirigir a você.</td></tr>
+  <tr><td>Chave da Brave Search API para pesquisa na web</td><td>Somente ao usar a pesquisa na web. Veja o capítulo 6.</td></tr>
+  <tr><td>Código do país da pesquisa / Número de resultados</td><td>O país dos resultados (ex.: <code>BR</code>) e quantos resultados obter (1–10).</td></tr>
+  <tr><td>Movimento do avatar</td><td>Escolha o movimento de repouso do avatar: "Sempre ativado / Seguir a configuração «reduzir animações» do sistema / Desativado" (vale somente para esta tela). Se o movimento incomodar, escolha "Desativado".</td></tr>
+  <tr><td>Temperatura</td><td>A variação das respostas. Quanto maior, mais livre; quanto menor, mais comedida (padrão 0,8). Se as respostas desandarem, baixar para 0,5–0,7 estabiliza.</td></tr>
+  <tr><td>Turnos de histórico</td><td>Quanto da conversa recente é enviado ao LLM a cada vez (padrão 12 turnos). Aumentar ajuda a manter o contexto, mas deixa mais pesado.</td></tr>
+  <tr><td>Intervalo de memória</td><td>A cada quantas mensagens suas as memórias são organizadas (padrão 2). Quanto menor, mais cedo memoriza, mas o LLM é chamado mais vezes.</td></tr>
+  <tr><td>Dias base da memória</td><td>Quanto maior, mais devagar esquece (padrão 10 dias). Veja o capítulo 5.</td></tr>
+</table></div>
+<div class="box warn"><b class="t">Onde as chaves ficam salvas</b>As chaves são salvas em <b>texto simples</b> em <code>user-data\config.json</code>. Não entregue essa pasta a outras pessoas nem a publique na internet.</div>
+
+<h2 id="pt-memory">5. Como a memória funciona</h2>
+<ul>
+  <li>A cada poucas trocas, o LLM extrai "o que vale a pena lembrar" (nomes, gostos, promessas…) e faz anotações.</li>
+  <li>Cada anotação recebe uma <b>importância</b> (1–5). Quanto mais importante, mais tempo ela dura.</li>
+  <li>Com o tempo, a <b>força</b> (o comprimento da barra) diminui. Mas, cada vez que ela surge na conversa e é lembrada, <b>fica mais forte e mais difícil de esquecer</b>.</li>
+  <li>Uma memória cuja força caiu demais deixa de ser lembrada.</li>
+  <li>As memórias são separadas <b>por personagem</b>. O que você conta ao Mochi, a Honoka não sabe.</li>
+  <li>Ao fechar a aba, usar "Limpar conversa" ou na próxima inicialização, a conversa ainda não organizada é transformada automaticamente em memórias.</li>
+</ul>
+<p>Memórias erradas podem ser apagadas com o "×" à direita.</p>
+
+<h2 id="pt-web">6. Pesquisa na web e clima</h2>
+<p>Quando perguntam sobre assuntos recentes ou coisas que não conhece, o personagem pode pesquisar na web e usar os resultados na resposta.</p>
+<ol>
+  <li>Obtenha uma chave de API na <a href="https://brave.com/search/api/">Brave Search API</a> (site externo).</li>
+  <li>Cole em <code>⚙ Configurações</code> → <code>Chave da Brave Search API</code> e salve.</li>
+  <li>Escolha o modo no menu ao lado do campo de entrada.
+    <ul>
+      <li><b>🔍 Auto</b> … Pesquisa somente quando o personagem julga necessário (padrão).</li>
+      <li><b>🔍 Sempre</b> … Pesquisa a cada mensagem.</li>
+      <li><b>🔍 Não</b> … Não pesquisa.</li>
+    </ul>
+  </li>
+</ol>
+<ul>
+  <li>Sem chave configurada, o menu mostra "🔍 Sem chave". Ao clicar, a tela de Configurações é aberta.</li>
+  <li>Quando houve pesquisa, os termos pesquisados e os links das fontes aparecem sob a mensagem.</li>
+  <li><b>Perguntas sobre o clima</b> que incluem um local do Japão (ex.: "Como vai estar o tempo amanhã em Fukuoka?") são respondidas com os <b>dados oficiais da Agência Meteorológica do Japão</b> em vez de uma pesquisa (funciona também em português e outros idiomas). Funciona quando o modo de pesquisa não é "Não". Pelo desenho atual da tela, <b>sem a chave da Brave Search API o modo de pesquisa não pode ser usado e esse recurso de clima também não funciona</b> (obter o clima em si não tem custo).</li>
+</ul>
+<div class="box warn"><b class="t">Privacidade</b>Ao usar a pesquisa, os termos pesquisados são enviados ao Brave. A conversa inteira não é enviada.</div>
+
+<h2 id="pt-addchar">7. Adicionar um personagem</h2>
+<ol>
+  <li>Pressione <code>+ Adicionar personagem</code> à esquerda.</li>
+  <li>Preencha o seguinte.
+    <div class="tablewrap"><table>
+      <tr><th>Item</th><th>O que escrever</th></tr>
+      <tr><td>Nome</td><td>Obrigatório.</td></tr>
+      <tr><td>Personalidade e jeito de falar</td><td>A base da personalidade do personagem. Como escrever: <a href="#pt-av-persona">capítulo 8</a>.</td></tr>
+      <tr><td>Primeira saudação</td><td>Opcional. É exibida primeiro ao escolher o personagem.</td></tr>
+      <tr><td>Estilo de movimento do avatar</td><td>"Criatura / chibi" ou "Humano" (<a href="#pt-av-motion">a diferença</a>).</td></tr>
+      <tr><td>Imagens de expressão</td><td><b>A neutra é obrigatória</b>; as outras são opcionais. As expressões que faltarem são exibidas usando a neutra.</td></tr>
+    </table></div>
+  </li>
+  <li>Pressione <code>Adicionar</code> e o personagem aparece na lista.</li>
+</ol>
+<p>Os personagens adicionados ficam salvos em <code>user-data\characters</code>. Para excluir, selecione o personagem e pressione <code>Excluir personagem</code>.</p>
+<div class="box tip"><b class="t">Teste primeiro só com a neutra</b>É uma boa ideia adicionar o personagem inicialmente só com a imagem neutra, verificar o movimento e depois ir acrescentando as outras expressões. A tela só permite criar personagens novos; para trocar imagens depois, é preciso recriar o personagem ou <a href="#pt-av-file">substituir os arquivos diretamente</a>.</div>
+
+<h2 id="pt-avatar">8. Criar um avatar</h2>
+<p>O avatar nada mais é do que a troca de "uma imagem por expressão". <b>Seja você quem desenha ou quem usa uma IA de geração de imagens, os passos são os mesmos</b>.</p>
+
+<h3 id="pt-av-spec">Especificações da imagem</h3>
+<div class="tablewrap"><table>
+  <tr><th>Item</th><th>Detalhes</th></tr>
+  <tr><td>Formato</td><td>PNG, JPEG, WebP etc. (ao adicionar pela tela). SVG não pode ser adicionado pela tela (somente <a href="#pt-av-file">colocando como arquivo</a>).</td></tr>
+  <tr><td>Fundo</td><td>Recomenda-se <b>transparente</b> (sem fundo). Com fundo também funciona, mas aparece uma moldura retangular.</td></tr>
+  <tr><td>Tamanho</td><td>Convertido automaticamente para WebP com o <b>lado maior de no máximo 768 px</b> (só reduz; imagens pequenas não são ampliadas). É exibido com cerca de 300 px de altura, então 512–768 px de lado são mais que suficientes.</td></tr>
+  <tr><td>Quantidade</td><td>Neutra (obrigatória) + até 7 (8 expressões no total).</td></tr>
+  <tr><td>Orientação e enquadramento</td><td>Corpo inteiro ou da cintura para cima. Como é exibido pequeno, use um enquadramento em que <b>o rosto apareça com clareza</b>.</td></tr>
+</table></div>
+
+<h3 id="pt-av-emo">As 8 expressões</h3>
+<p>O LLM lê as descrições abaixo e escolhe "qual expressão combina com a resposta atual".</p>
+<div class="tablewrap"><table>
+  <tr><th>Nome</th><th>Significado</th><th>Quando é usada</th></tr>
+  <tr><td><code>neutral</code></td><td>Neutra (obrigatória)</td><td>Conversa tranquila. O rosto de sempre.</td></tr>
+  <tr><td><code>happy</code></td><td>Feliz</td><td>Alegria, diversão, receber um elogio.</td></tr>
+  <tr><td><code>sad</code></td><td>Triste</td><td>Tristeza, decepção, desânimo.</td></tr>
+  <tr><td><code>angry</code></td><td>Brava</td><td>Raiva, insatisfação, estar emburrada.</td></tr>
+  <tr><td><code>surprised</code></td><td>Surpresa</td><td>Surpresa, algo inesperado.</td></tr>
+  <tr><td><code>embarrassed</code></td><td>Envergonhada</td><td>Timidez, vergonha.</td></tr>
+  <tr><td><code>thinking</code></td><td>Pensando</td><td>Estar pensativa, hesitar. Também aparece enquanto se espera a resposta.</td></tr>
+  <tr><td><code>sleepy</code></td><td>Com sono</td><td>Sono, calma, tédio.</td></tr>
+</table></div>
+<p>Funciona sem ter todas, mas ter <b>neutral, happy e sad</b> muda bastante a impressão.</p>
+
+<h3 id="pt-av-make">Dicas para criar</h3>
+<ul>
+  <li><b>Parecer a mesma pessoa</b> é o mais importante. Se o rosto, o penteado ou a roupa mudarem de uma expressão para outra, parecerão pessoas diferentes.</li>
+  <li><b>Se usar uma IA de geração de imagens</b>
+    <ul>
+      <li>Primeiro defina uma imagem neutra.</li>
+      <li>Para as outras expressões, mantenha a <b>mesma seed e o mesmo prompt</b> e troque apenas as palavras sobre a expressão (sorrindo, chorando, cara de raiva etc.).</li>
+      <li>Para ficar ainda mais estável, use a neutra como imagem original e gere com imagem para imagem com uma mudança fraca (com uma configuração que preserve bastante a original).</li>
+      <li>A cada geração, confira se o rosto, o cabelo, a roupa, o laço e outros itens pequenos não mudaram, e refaça qualquer imagem em que apareça algo estranho.</li>
+    </ul>
+  </li>
+  <li><b>Se for desenhar</b> … Desenhe a neutra e depois redesenhe só os olhos, as sobrancelhas e a boca; é o mais fácil. Use o mesmo tamanho de tela em todas as expressões.</li>
+  <li><b>Fundo transparente</b> … Gere/desenhe com o fundo de uma cor só e transforme em PNG transparente com uma ferramenta de recorte (como "remover fundo" dos editores de imagem).</li>
+  <li><b>Alinhar a tela e os pés</b> … Se o tamanho ou a posição do personagem variarem entre as expressões, o avatar parece pular ao trocar. Use <b>o mesmo tamanho de tela e a mesma posição em todas as expressões</b>. O avatar se move tendo os pés como ponto de apoio, por isso é importante <b>alinhar os pés (a borda inferior)</b>.</li>
+  <li><b>Atenção aos direitos</b> … Respeite as regras de desenhos feitos por outras pessoas e de modelos ou materiais com condições de uso. Confira especialmente ao publicar ou distribuir.</li>
+</ul>
+
+<h3 id="pt-av-motion">Como escolher o movimento</h3>
+<div class="tablewrap"><table>
+  <tr><th>Tipo</th><th>Movimento</th><th>Indicado para</th></tr>
+  <tr><td>Criatura / chibi (<code>squash</code>)</td><td>Achata e estica, e quica. Pula quando está feliz.</td><td>Mascotes, animais, criaturas misteriosas.</td></tr>
+  <tr><td>Humano (<code>soft</code>)</td><td>Não deforma o corpo; só sobe/desce e uma inclinação bem pequena.</td><td>Personagens humanos.</td></tr>
+</table></div>
+<p>Se você escolher "criatura" para um desenho de pessoa, o corpo se deforma e fica artificial. Use "Humano". Se o movimento atrapalhar, você pode desligá-lo em <code>Movimento do avatar</code> nas Configurações.</p>
+
+<h3 id="pt-av-persona">Como escrever a personalidade</h3>
+<p>"Personalidade e jeito de falar" é repassado ao LLM exatamente como escrito. Quanto <b>mais curto e concreto</b>, mais estável fica, mesmo com um modelo pequeno. Os personagens integrados (<code>character.json</code> na pasta <code>characters</code>) servem de modelo.</p>
+<ul>
+  <li><b>Informações básicas</b> … Idade, como se refere a si mesmo, sentimentos em relação a você.</li>
+  <li><b>Jeito de falar</b> … Cacoetes e finais de frase, e <b>3–4 frases de exemplo</b>. Os exemplos são o que mais funciona.</li>
+  <li><b>Comportamento</b> (em tópicos) … ex.: "Responde em 1–3 frases", "Responde o que foi perguntado; não repete as mesmas palavras", "Se não sabe, diz com sinceridade que não sabe".</li>
+  <li><b>Gatilhos de expressão</b> … ex.: se você escrever "fica envergonhada quando é elogiada de verdade", <code>embarrassed</code> aparecerá com mais frequência.</li>
+</ul>
+<pre><code>Exemplo: Uma criatura misteriosa e tranquila. Refere-se a si mesma como "eu". Termina as frases com "-mochi".
+[Jeito de falar] Devagar e com ternura. Ex.: "Bom dia, mochi" "Que lindo, mochi"
+[Comportamento]
+- Responde em 1-3 frases.
+- Responde o que foi perguntado. Não repete as mesmas palavras.
+- Fica envergonhada quando é elogiada.</code></pre>
+
+<h3 id="pt-av-file">Usando arquivos (avançado)</h3>
+<p>Quando a tela não basta (usar imagens SVG, ter mais que as 8 expressões, corrigir configurações etc.), você pode criar a pasta e os arquivos diretamente.</p>
+<ol>
+  <li>Dentro de <code>user-data\characters</code>, crie uma pasta com o nome que quiser (letras e números). Exemplo: <code>user-data\characters\sakura</code></li>
+  <li>Coloque nela as imagens de expressão (png / webp / svg etc.) e um <code>character.json</code>.</li>
+  <li>Recarregue o navegador (<kbd>F5</kbd>).</li>
+</ol>
+<pre><code>{
+  "name": "Sakura",
+  "persona": "Uma garota tranquila de 18 anos. …",
+  "greeting": "Olá. Você veio, né.",
+  "motion": "soft",
+  "fallback": "neutral",
+  "emotions": {
+    "neutral": { "file": "neutral.webp", "hint": "Estado normal. Conversa tranquila" },
+    "happy":   { "file": "happy.webp",   "hint": "Alegria, diversão, elogios" },
+    "sad":     { "file": "sad.webp",     "hint": "Tristeza, decepção, desânimo" }
+  }
+}</code></pre>
+<ul>
+  <li><code>motion</code> é <code>soft</code> (humano) ou <code>squash</code> (padrão).</li>
+  <li><code>fallback</code> é a expressão usada quando a correspondente não existe (normalmente <code>neutral</code>).</li>
+  <li><code>hint</code> é a descrição de "quando usar esta expressão"; o LLM a lê para escolher. Reescrevendo-a, você muda a forma como as expressões aparecem só nesse personagem. Se omitida, usa-se a descrição padrão.</li>
+  <li>Também é possível ter nomes de expressão além das 8 (ex.: <code>shy</code>). Nesse caso, escreva sempre um <code>hint</code>.</li>
+  <li>É mais seguro fazer backup de <code>user-data</code> antes de editar (capítulo 10). Se errar uma <code>,</code> ou um <code>"</code> no JSON, esse personagem some da lista.</li>
+</ul>
+
+<h2 id="pt-lang">9. Trocar o idioma</h2>
+<p>No menu de idioma, no canto inferior esquerdo, você pode escolher 日本語, English, 简体中文, Español ou Português. Ao trocar, mudam as seguintes coisas.</p>
+<ul>
+  <li>Os textos da tela e mensagens como os erros.</li>
+  <li>O nome, a personalidade e a saudação dos personagens integrados (Mochi, Honoka, Rei).</li>
+  <li><b>O idioma das respostas do personagem</b> (ele é instruído a responder nesse idioma).</li>
+</ul>
+<p>O nome, as configurações e a saudação dos personagens que você adicionou continuam no idioma em que foram escritos.</p>
+<div class="box warn"><b class="t">Atenção</b>
+  <ul>
+    <li>As telas em inglês, chinês, espanhol e português e as traduções dos personagens integrados são tradução automática e não foram revisadas por falantes nativos. Pode haver expressões artificiais.</li>
+    <li>Cada modelo é bom em idiomas diferentes. Modelos pequenos como o Stheno são mais estáveis em inglês. O japonês é mais fraco.</li>
+    <li>Trocar o idioma não muda o idioma dos históricos de conversa já existentes.</li>
+    <li>Este manual está disponível em japonês, inglês, chinês, espanhol e português (veja as abas no topo); as traduções também são automáticas.</li>
+  </ul>
+</div>
+
+<h2 id="pt-data">10. Dados, backup e atualização</h2>
+<div class="tablewrap"><table>
+  <tr><th>Pasta / arquivo</th><th>Conteúdo</th><th>Se apagar</th></tr>
+  <tr><td><code>user-data\</code></td><td>Configurações (<code>config.json</code>), conversas e memórias (<code>app.db</code>), personagens adicionados</td><td><b>Tudo é perdido.</b> Basta fazer backup só disto para se mudar para outro PC.</td></tr>
+  <tr><td><code>system\</code></td><td>O conjunto do Python instalado automaticamente</td><td>É refeito na próxima inicialização (novo download).</td></tr>
+  <tr><td><code>llama.cpp\</code> <code>llama-swap\</code></td><td>Executáveis do LLM local</td><td>Reinstale com <code>misc\setup-llm.bat</code>.</td></tr>
+  <tr><td><code>models\</code></td><td>Arquivos de modelos LLM (cerca de 4,9 GB cada)</td><td>Baixar de novo.</td></tr>
+  <tr><td><code>misc\downloads\</code></td><td>Onde ficam os zips baixados</td><td>Pode apagar (libera espaço).</td></tr>
+</table></div>
+<h3>Backup</h3>
+<p>Feche o aplicativo e copie a pasta <code>user-data</code> inteira. Para restaurar, copie de volta sobrescrevendo no mesmo lugar.</p>
+<h3>Atualizar</h3>
+<ol>
+  <li>Extraia o zip novo.</li>
+  <li>Copie as pastas <code>app</code>, <code>characters</code> e <code>misc</code>, além de <code>start.bat</code> e dos <code>manual.html</code>, sobre a sua pasta atual (<b>sobrescrever</b>).</li>
+  <li>Inicie com o <code>start.bat</code>.</li>
+</ol>
+<p><code>user-data</code>, <code>system</code>, <code>models</code> etc. não estão no zip, então <b>não são apagados ao sobrescrever</b>.</p>
+
+<h2 id="pt-trouble">11. Solução de problemas</h2>
+<div class="tablewrap"><table>
+  <tr><th>Sintoma</th><th>O que verificar</th></tr>
+  <tr><td>Aparece um aviso para informar o nome do modelo nas Configurações</td><td>O <code>Nome do modelo</code> nas Configurações está vazio. Escolha um com "Obter lista" e salve.</td></tr>
+  <tr><td>Não vem resposta / erros como "Não foi possível conectar"</td><td>O servidor LLM está em execução? Se você usou a configuração, confira se há uma janelinha do llama-swap na barra de tarefas. Se não houver, execute o <code>start.bat</code> de novo. LM Studio e Ollama devem ser iniciados antes. Confira também se a <code>URL do servidor</code> está correta.</td></tr>
+  <tr><td>A primeira resposta demora muito</td><td>Na primeira vez o modelo é carregado na GPU, o que leva dezenas de segundos. Da segunda vez em diante fica mais rápido.</td></tr>
+  <tr><td>Sempre lento / para no meio</td><td>Pode estar faltando memória na GPU. Tente fechar outros aplicativos (jogos, geração de imagens etc.), reduzir os <code>Turnos de histórico</code> nas Configurações ou mudar <code>-c 8192</code> para <code>-c 4096</code> em <code>llama-swap\config.yaml</code>.</td></tr>
+  <tr><td>O formato da resposta quebra ou ela se repete</td><td>Baixe a <code>Temperatura</code> para 0,5–0,7. Se não resolver, experimente outro modelo. O aplicativo também relê e tenta de novo as respostas quebradas.</td></tr>
+  <tr><td>A expressão não muda</td><td>O personagem pode ter só uma imagem (apenas neutral). <a href="#pt-av-emo">Adicione mais expressões</a>.</td></tr>
+  <tr><td>As memórias não aumentam</td><td>Elas são organizadas a cada poucas trocas. Diminua o <code>Intervalo de memória</code> ou use <code>Limpar conversa</code> para organizar tudo até agora.</td></tr>
+  <tr><td>O navegador não abre</td><td>Abra <code>http://127.0.0.1:8765</code> manualmente. Se a porta estiver em uso, é usado automaticamente o número seguinte (8766…); veja o endereço mostrado na janela preta.</td></tr>
+  <tr><td>A pesquisa não funciona</td><td>A chave do Brave não está configurada, ou o menu ao lado do campo de entrada está em "Não". Veja o capítulo 6.</td></tr>
+  <tr><td>O download da configuração falhou</td><td>Verifique a conexão com a internet e abra de novo o <code>start.bat</code> (ou <code>misc\setup-llm.bat</code>). Ele continua de onde parou.</td></tr>
+  <tr><td>Um personagem sumiu da lista</td><td>Pode haver um erro de formato no <code>character.json</code>. Compare com o exemplo de <a href="#pt-av-file">"Usando arquivos" do capítulo 8</a>.</td></tr>
+</table></div>
+
+<h2 id="pt-tools">12. Apêndice: ferramentas para criadores (avançado)</h2>
+<p>Scripts de linha de comando usados para criar imagens de avatar e pacotes de distribuição. <b>Se você só vai usar o aplicativo normalmente, não precisa ler este capítulo.</b> Todos ficam na pasta <code>misc</code>.</p>
+<div class="box warn"><b class="t">Pré-requisitos</b>Execute os comandos abrindo o Prompt de Comando ou o PowerShell na mesma pasta do <code>start.bat</code>. Usa-se o Python instalado pelo <code>start.bat</code> (<code>system\python\python.exe</code>). O <code>%py%</code> dos exemplos abaixo é uma forma abreviada de escrevê-lo.<br>
+  <code>set py=system\python\python.exe</code> (Prompt de Comando) / <code>$py = "system\python\python.exe"</code> (PowerShell)</div>
+
+<div class="tablewrap"><table>
+  <tr><th>Script</th><th>O que faz</th><th>Como executar</th></tr>
+  <tr><td><code>gen_images.py</code></td><td>Faz o ComfyUI gerar automaticamente as imagens do personagem para cada expressão</td><td><code>%py% misc\gen_images.py especificacao.json</code></td></tr>
+  <tr><td><code>make_sprites.py</code></td><td>Torna transparente o fundo branco dos PNGs gerados e converte para WebP (até 768 px)</td><td><code>%py% misc\make_sprites.py pasta_PNG pasta_saida</code></td></tr>
+  <tr><td><code>make_zip.py</code></td><td>Cria o zip de distribuição (não inclui <code>user-data</code>, <code>models</code> etc.)</td><td><code>%py% misc\make_zip.py</code></td></tr>
+  <tr><td><code>smoke_test.py</code></td><td>Executa o aplicativo com um LLM de mentira e confere se tudo funciona</td><td><code>%py% misc\smoke_test.py</code></td></tr>
+</table></div>
+
+<h3 id="pt-tool-gen">Gerar automaticamente as imagens de expressão (gen_images.py → make_sprites.py)</h3>
+<p>Este é o fluxo para criar de uma vez as 8 expressões de um mesmo personagem. É preciso que o <b>ComfyUI esteja em execução e tenha um modelo instalado</b>.</p>
+<ol>
+  <li>Crie um arquivo de especificação (JSON). Copie o exemplo abaixo e ajuste.</li>
+  <li>Informe o endereço do ComfyUI pela variável de ambiente <code>COMFY_HOST</code> (se não estiver definida, <code>http://127.0.0.1:8188</code>).<br>
+    <code>set COMFY_HOST=http://127.0.0.1:8188</code></li>
+  <li>Execute <code>%py% misc\gen_images.py especificacao.json</code>. Ele cria uma imagem por expressão e salva em <code>outdir</code> como <code>nome_da_expressao.png</code>. Para refazer apenas algumas expressões, acrescente-as no final separadas por vírgula (ex.: <code>especificacao.json sad,happy</code>).</li>
+  <li>Com <code>%py% misc\make_sprites.py pasta_PNG pasta_saida</code> você obtém WebPs com fundo transparente. Essa conversão remove as informações embutidas no PNG, como o prompt.</li>
+  <li>Registre os WebPs resultantes pela tela <a href="#pt-addchar">Adicionar personagem</a>.</li>
+</ol>
+<pre><code>{
+  "outdir": "misc/gen/mychar",
+  "prefix": "avt_mychar",
+  "checkpoint": "nome_do_arquivo_do_modelo.safetensors",
+  "width": 832, "height": 1216, "steps": 28, "cfg": 5.5, "seed": 12345,
+  "base": "1girl, solo, long hair, white blouse, upper body, simple background, white background",
+  "negative": "worst quality, low quality, bad anatomy, text, watermark",
+  "variants": {
+    "neutral": "closed mouth, light smile",
+    "happy": "bright smile, open mouth",
+    "sad": "sad, teary eyes",
+    "angry": "angry, furrowed brow",
+    "surprised": "surprised, wide eyes, open mouth",
+    "embarrassed": "embarrassed, blush, looking away",
+    "thinking": "thinking, hand on own chin, looking up",
+    "sleepy": "sleepy, half-closed eyes"
+  }
+}</code></pre>
+<ul>
+  <li><code>base</code> é a aparência comum a todas as expressões e <code>variants</code> são as palavras acrescentadas em cada uma. <b>Não mudar seed nem base</b> mantém o rosto coerente (<a href="#pt-av-make">Dicas para criar</a>).</li>
+  <li>Para mudar apenas a expressão a partir de uma imagem de referência, acrescente <code>"init_image": "referencia.png"</code> e <code>"denoise": 0.6</code> (quanto menor o denoise, mais parecido com o original). Para variar por expressão, use <code>"variant_denoise": {"sad": 0.7}</code>.</li>
+  <li>O processo que torna o fundo transparente pressupõe um <b>fundo branco liso</b>. Coloque <code>white background</code> em <code>base</code>.</li>
+  <li>Cada imagem leva dezenas de segundos. Se passados 5 minutos ainda não terminou, essa expressão dá erro.</li>
+  <li>O fluxo de trabalho do ComfyUI é montado automaticamente com uma configuração básica de um só modelo (checkpoint → KSampler → salvar). LoRA e ControlNet não podem ser usados.</li>
+</ul>
+
+<h3 id="pt-tool-zip">Criar o zip de distribuição (make_zip.py)</h3>
+<p>Cria, a partir da pasta do projeto, um zip sem <code>user-data</code> (conversas e configurações), <code>system</code>, <code>downloads</code>, <code>llama.cpp</code>, <code>llama-swap</code>, <code>models</code> e a pasta de trabalho <code>gen</code>. O destino é <code>avatar-chat-dist\avatar-chat.zip</code>, um nível acima do projeto. Para colocar em outro lugar, acrescente o destino no final (ex.: <code>%py% misc\make_zip.py C:\temp\a.zip</code>).</p>
+
+<h3 id="pt-tool-test">Verificar o funcionamento (smoke_test.py)</h3>
+<p>Copia o projeto para uma pasta temporária, inicia o aplicativo com um LLM de mentira e testa, uma a uma, as APIs que a tela usa. Se no final aparecer <code>RESULT: ALL PASSED</code>, deu certo. Não mexe no seu <code>user-data</code>. Serve para conferir depois de corrigir o código.</p>
+<div class="box tip"><b class="t">Atenção</b>Estes scripts foram feitos e executados no ambiente do autor (Linux). Nem todos foram realmente testados com o <code>system\python</code> do Windows. Se algo não funcionar, investigue a partir da mensagem de erro.</div>
+
+<footer>Manual do Avatar Chat</footer>
+</main>
+</div>
+<script>
+(function(){
+var T={ja:"Avatar Chat マニュアル",en:"Avatar Chat Manual",zh:"Avatar Chat 使用手册",es:"Manual de Avatar Chat",pt:"Manual do Avatar Chat"}, L=["ja","en","zh","es","pt"];
+function st(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+function show(l){
+  document.querySelectorAll(".wrap").forEach(function(w){w.hidden=w.dataset.lang!==l});
+  document.querySelectorAll(".tabbar button").forEach(function(b){b.setAttribute("aria-selected",b.dataset.t===l)});
+  document.documentElement.lang=l==="zh"?"zh-CN":l==="pt"?"pt-BR":l;
+  document.title=T[l]; st("manualLang",l);
+}
+function fromHash(){var m=/^#(ja|en|zh|es|pt)-/.exec(location.hash);return m&&m[1]}
+function guess(){var n=(navigator.language||"ja").slice(0,2);return L.indexOf(n)>=0?n:"ja"}
+document.querySelectorAll(".tabbar button").forEach(function(b){
+  b.addEventListener("click",function(){show(b.dataset.t);history.replaceState(null,"",location.pathname+location.search);window.scrollTo(0,0)});
+});
+window.addEventListener("hashchange",function(){var l=fromHash();if(l)show(l)});
+var l0=fromHash()||st("manualLang")||guess(); if(L.indexOf(l0)<0)l0="ja";
+show(l0);
+if(location.hash){var e=document.getElementById(location.hash.slice(1));if(e)e.scrollIntoView()}
+})();
+</script>
 </body>
 </html>
